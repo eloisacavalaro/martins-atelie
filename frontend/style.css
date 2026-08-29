@@ -1787,6 +1787,454 @@ RESPONSIVIDADE
     }
 
 }
+
+/* =========================================
+   PAINEL ADMINISTRATIVO — RESPONSIVIDADE FINAL
+========================================= */
+
+.admin-layout,
+.admin-content,
+.admin-card,
+.page-header,
+.cliente-info,
+.agendamento-info,
+.aluguel-info,
+.despesa-info {
+    min-width: 0;
+}
+
+@media (max-width: 720px) {
+    .admin-layout {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        min-height: auto;
+        padding: 18px 16px 14px;
+        border-right: 0;
+        border-bottom: 1px solid #e8e0da;
+        box-shadow: none;
+    }
+
+    .sidebar .logo {
+        margin-bottom: 16px;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 2px 0 10px;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar-nav a {
+        flex: 0 0 auto;
+        padding: 10px 12px;
+        border: 1px solid #eee3e6;
+        border-radius: 999px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .sidebar-nav a.active::before {
+        display: none;
+    }
+
+    .sidebar-bottom {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4px;
+        padding-top: 12px;
+    }
+
+    .admin-content {
+        width: 100%;
+        margin-left: 0;
+        padding: 30px 16px 42px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+        margin-bottom: 26px;
+    }
+
+    .page-header h1,
+    .admin-header h1 {
+        font-size: clamp(2.35rem, 11vw, 3rem);
+    }
+
+    .page-header > .btn {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .admin-card {
+        padding: 18px;
+        margin-bottom: 18px;
+        border-radius: 14px;
+    }
+
+    .card-header {
+        margin-bottom: 18px;
+    }
+
+    .card-header h2 {
+        font-size: 1.65rem;
+    }
+
+    .form-row,
+    #agendamentoForm .form-row,
+    #aluguelForm .form-row,
+    #despesaForm .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .input-group input,
+    .input-group select,
+    .input-group textarea {
+        min-height: 46px;
+        font-size: 16px;
+    }
+
+    .input-group textarea {
+        min-height: 110px;
+    }
+
+    .form-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .form-actions .btn {
+        min-height: 46px;
+        padding-inline: 10px;
+    }
+
+    .cliente-item,
+    .agendamento-item,
+    .aluguel-item,
+    .despesa-item {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px 0;
+    }
+
+    .cliente-info,
+    .agendamento-info,
+    .aluguel-info,
+    .despesa-info {
+        width: 100%;
+    }
+
+    .cliente-info > div:last-child,
+    .agendamento-info > div:last-child,
+    .aluguel-detalhes,
+    .despesa-info > div:last-child {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .cliente-acoes,
+    .agendamento-acoes,
+    .aluguel-acoes,
+    .despesa-acoes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 8px;
+    }
+
+    .cliente-acoes strong,
+    .agendamento-acoes .status,
+    .aluguel-acoes .status,
+    .despesa-valor {
+        grid-column: 1 / -1;
+        margin-right: 0 !important;
+        text-align: left;
+    }
+
+    .cliente-acoes .btn,
+    .agendamento-acoes .btn,
+    .aluguel-acoes .btn,
+    .despesa-acoes .btn {
+        width: 100%;
+        min-height: 42px;
+    }
+
+    .dashboard-cards,
+    .finance-cards,
+    .despesas-resumo,
+    .quick-actions {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .dashboard-card,
+    .finance-card,
+    .quick-action,
+    .despesa-resumo-card {
+        min-height: auto;
+        padding: 20px;
+    }
+
+    #vestidosLista {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .vestido-admin > img {
+        height: min(420px, 110vw);
+    }
+}
+
+@media (max-width: 380px) {
+    .admin-content {
+        padding-inline: 12px;
+    }
+
+    .admin-card {
+        padding: 15px;
+    }
+
+    .form-actions,
+    .cliente-acoes,
+    .agendamento-acoes,
+    .aluguel-acoes,
+    .despesa-acoes {
+        grid-template-columns: 1fr;
+    }
+
+    .agendamento-info,
+    .aluguel-info,
+    .cliente-info,
+    .despesa-info {
+        gap: 12px;
+    }
+
+    .agendamento-data {
+        min-width: 72px;
+    }
+}
+
+/* =========================================
+   REFINAMENTO VISUAL — INTERAÇÕES E CONSISTÊNCIA
+========================================= */
+
+:root {
+    --surface: #ffffff;
+    --surface-soft: #fff8fa;
+    --focus-ring: rgba(141, 82, 103, 0.18);
+    --shadow-sm: 0 8px 24px rgba(75, 43, 55, 0.07);
+    --shadow-md: 0 18px 42px rgba(75, 43, 55, 0.13);
+}
+
+body {
+    min-width: 320px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+::selection {
+    background: #ead3da;
+    color: var(--wine-dark);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+}
+
+.btn,
+.nav-agendar,
+.whatsapp-button,
+.filter,
+.back-top {
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.btn:hover,
+.nav-agendar:hover,
+.whatsapp-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(102, 56, 73, 0.2);
+}
+
+.header {
+    box-shadow: 0 4px 18px rgba(75, 43, 55, 0.035);
+}
+
+.category-card,
+.product-card,
+.appointment-form,
+.modal-content {
+    border-radius: 12px;
+}
+
+.category-card {
+    box-shadow: 0 3px 12px rgba(75, 43, 55, 0.025);
+}
+
+.product-card {
+    border: 1px solid transparent;
+}
+
+.product-card:hover {
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border);
+}
+
+.product-image {
+    border-radius: 10px;
+}
+
+.filter:focus-visible,
+.view-product:focus-visible {
+    outline-offset: 2px;
+}
+
+.appointment {
+    background: linear-gradient(135deg, var(--wine-dark), var(--wine) 58%, #a9697d);
+}
+
+.appointment-form {
+    border: 1px solid rgba(255, 255, 255, 0.34);
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--focus-ring);
+}
+
+.modal-content {
+    box-shadow: var(--shadow-md);
+}
+
+/* Painel administrativo */
+.admin-content {
+    background: radial-gradient(circle at top right, #fffafb 0, transparent 28rem), #f8f5f2;
+}
+
+.sidebar {
+    box-shadow: 8px 0 30px rgba(80, 60, 50, 0.025);
+}
+
+.sidebar-nav a {
+    position: relative;
+}
+
+.sidebar-nav a.active::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 3px;
+    height: 22px;
+    border-radius: 99px;
+    background: #9d7969;
+    transform: translateY(-50%);
+}
+
+.dashboard-card,
+.finance-card,
+.admin-card,
+.quick-action {
+    box-shadow: var(--shadow-sm);
+}
+
+.dashboard-card,
+.finance-card,
+.quick-action,
+.cliente-item,
+.agendamento-item,
+.aluguel-item,
+.despesa-item,
+.vestido-admin {
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.dashboard-card:hover,
+.finance-card:hover,
+.quick-action:hover,
+.vestido-admin:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.cliente-item:hover,
+.agendamento-item:hover,
+.aluguel-item:hover,
+.despesa-item:hover {
+    background: var(--surface-soft);
+}
+
+.page-header h1,
+.admin-header h1 {
+    letter-spacing: -0.025em;
+}
+
+.empty-state,
+.despesas-empty {
+    border: 1px dashed #decdd3;
+    border-radius: 14px;
+    background: var(--surface-soft);
+}
+
+@media (max-width: 550px) {
+    .sidebar-nav a.active::before {
+        left: -4px;
+    }
+
+    .admin-card {
+        border-radius: 14px;
+        padding: 20px;
+    }
+
+    .product-image {
+        height: min(500px, 125vw);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
 /* =========================================
 CLIENTES
 ========================================= */
@@ -4512,6 +4960,472 @@ FOOTER RESPONSIVO
     }
 
 
+}
+
+/* Regra final: prioriza o uso do painel em telas pequenas. */
+@media (max-width: 720px) {
+    .admin-layout { display: block; }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        min-height: auto;
+        padding: 18px 16px 14px;
+        border-right: 0;
+        box-shadow: none;
+    }
+
+    .sidebar .logo { margin-bottom: 16px; }
+
+    .sidebar-nav {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 2px 0 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar-nav a {
+        flex: 0 0 auto;
+        padding: 10px 12px;
+        border: 1px solid #eee3e6;
+        border-radius: 999px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .sidebar-nav a.active::before { display: none; }
+
+    .sidebar-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 4px;
+        padding-top: 12px;
+    }
+
+    .admin-content {
+        width: 100%;
+        margin-left: 0;
+        padding: 30px 16px 42px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+        margin-bottom: 26px;
+    }
+
+    .page-header h1,
+    .admin-header h1 { font-size: clamp(2.35rem, 11vw, 3rem); }
+
+    .page-header > .btn { width: 100%; min-height: 46px; }
+
+    .admin-card { padding: 18px; margin-bottom: 18px; border-radius: 14px; }
+
+    .form-row,
+    #agendamentoForm .form-row,
+    #aluguelForm .form-row,
+    #despesaForm .form-row { grid-template-columns: 1fr; gap: 0; }
+
+    .input-group input,
+    .input-group select,
+    .input-group textarea { min-height: 46px; font-size: 16px; }
+
+    .input-group textarea { min-height: 110px; }
+
+    .form-actions { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .form-actions .btn { min-height: 46px; padding-inline: 10px; }
+
+    .cliente-item,
+    .agendamento-item,
+    .aluguel-item,
+    .despesa-item { align-items: stretch; flex-direction: column; gap: 16px; padding: 18px 0; }
+
+    .cliente-info,
+    .agendamento-info,
+    .aluguel-info,
+    .despesa-info { width: 100%; min-width: 0; }
+
+    .cliente-acoes,
+    .agendamento-acoes,
+    .aluguel-acoes,
+    .despesa-acoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 8px; }
+
+    .cliente-acoes strong,
+    .agendamento-acoes .status,
+    .aluguel-acoes .status,
+    .despesa-valor { grid-column: 1 / -1; margin-right: 0 !important; text-align: left; }
+
+    .cliente-acoes .btn,
+    .agendamento-acoes .btn,
+    .aluguel-acoes .btn,
+    .despesa-acoes .btn { width: 100%; min-height: 42px; }
+
+    .dashboard-cards,
+    .finance-cards,
+    .despesas-resumo,
+    .quick-actions,
+    #vestidosLista { grid-template-columns: 1fr; gap: 12px; }
+
+    .vestido-admin > img { height: min(420px, 110vw); }
+}
+
+@media (max-width: 380px) {
+    .admin-content { padding-inline: 12px; }
+    .admin-card { padding: 15px; }
+    .form-actions,
+    .cliente-acoes,
+    .agendamento-acoes,
+    .aluguel-acoes,
+    .despesa-acoes { grid-template-columns: 1fr; }
+}
+
+/* Acabamento final: identidade premium aplicada após os estilos legados. */
+:root {
+    --wine: #7a3f55;
+    --wine-dark: #48202f;
+    --gold: #b89563;
+    --cream: #fbf7f2;
+    --text: #33262b;
+    --border: #eadde0;
+    --shadow: 0 22px 55px rgba(73, 34, 49, .12);
+}
+
+body { background: var(--cream); color: var(--text); }
+.container { width: min(1200px, calc(100% - 48px)); }
+.eyebrow, .page-eyebrow { color: var(--gold); font-weight: 700; letter-spacing: .22em; }
+
+.header { background: rgba(255, 252, 250, .84); box-shadow: 0 7px 28px rgba(62, 29, 42, .045); }
+.nav-agendar, .btn-primary { background: linear-gradient(135deg, #8e5065, var(--wine-dark)); box-shadow: 0 8px 18px rgba(72, 32, 47, .16); }
+.hero { background-position: center 35%; }
+.hero-overlay { background: linear-gradient(90deg, rgba(34, 15, 24, .84), rgba(50, 22, 34, .57) 42%, rgba(50, 22, 34, .05) 84%); }
+.hero h1, .section-header h2, .about-content h2 { letter-spacing: -.045em; text-wrap: balance; }
+.categories, .collection, .about, .how { padding-block: clamp(76px, 10vw, 130px); }
+.category-card { border-radius: 14px; border-color: rgba(122, 63, 85, .1); background: linear-gradient(145deg, #fff, #fffafa); }
+.category-icon { background: linear-gradient(135deg, #f9edf0, #eed8de); }
+.product-image { border-radius: 12px 12px 0 0; }
+.about { background: linear-gradient(135deg, #fff8f9, #f6e9ec); }
+.about-image { border-radius: 3px 56px 3px 56px; box-shadow: var(--shadow); }
+.appointment { background: linear-gradient(125deg, #421b2b, #7a3f55 55%, #a56075); }
+.appointment-form { border-radius: 16px; box-shadow: 0 30px 70px rgba(24, 8, 14, .28); }
+.footer { background: #29171f; }
+
+.admin-layout { background: #f6f1ee; }
+.sidebar {
+    width: 270px;
+    padding: 38px 22px 28px;
+    background: linear-gradient(165deg, #351925, #54293a 58%, #6e3d51);
+    border: 0;
+    box-shadow: 12px 0 34px rgba(43, 20, 30, .12);
+}
+.sidebar .logo { margin: 0 12px 54px; }
+.sidebar .logo span { color: #f4dfe5; }
+.sidebar .logo strong { color: #e0b8c4; }
+.sidebar-nav a { color: rgba(255, 245, 247, .72); padding: 12px 14px; }
+.sidebar-nav a:hover { color: #fff; background: rgba(255, 255, 255, .09); }
+.sidebar-nav a.active { color: #fff; background: rgba(255, 255, 255, .15); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .09); }
+.sidebar-nav a.active::before { background: #e8bdc9; }
+.sidebar-bottom { border-top-color: rgba(255, 255, 255, .13); }
+.sidebar-bottom a, .sidebar-bottom button { color: rgba(255, 245, 247, .76); }
+.admin-content {
+    width: calc(100% - 270px);
+    margin-left: 270px;
+    padding: 64px clamp(28px, 5vw, 76px);
+    background: radial-gradient(circle at 94% 3%, #f9e9ed 0, transparent 24rem), #f8f5f2;
+}
+.admin-header h1, .page-header h1 { color: #3e2730; letter-spacing: -.045em; }
+.dashboard-card, .finance-card, .admin-card, .quick-action, .despesa-resumo-card {
+    border: 1px solid rgba(115, 75, 88, .1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 10px 30px rgba(72, 41, 51, .055);
+}
+.dashboard-card { min-height: 142px; padding: 26px; }
+.dashboard-card strong { color: var(--wine); font-size: 2.7rem; }
+.finance-card { border-top: 3px solid var(--gold); }
+.quick-action { position: relative; overflow: hidden; }
+.quick-action::after { content: "→"; position: absolute; top: 21px; right: 22px; color: var(--gold); font-size: 1.2rem; }
+.admin-card { padding: clamp(20px, 3vw, 32px); }
+.input-group input, .input-group select, .input-group textarea { border-color: #e6d9de; background: #fffcfd; }
+
+@media (max-width: 900px) {
+    .sidebar { width: 230px; }
+    .admin-content { width: calc(100% - 230px); margin-left: 230px; padding: 44px 28px; }
+}
+
+@media (max-width: 720px) {
+    .container { width: min(100% - 32px, 1200px); }
+    .sidebar { width: 100%; padding: 18px 16px 14px; background: linear-gradient(110deg, #351925, #6e3d51); }
+    .sidebar .logo { margin: 0 4px 14px; }
+    .sidebar-nav a { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .1); }
+    .admin-content { width: 100%; margin-left: 0; padding: 30px 16px 42px; }
+    .about-image { border-radius: 3px 36px 3px 36px; }
+}
+
+/* =========================================
+   DIREÇÃO DE ARTE — MARTINS ATELIÊ
+   Acabamento editorial para vitrine e gestão
+========================================= */
+
+:root {
+    --wine: #7a3f55;
+    --wine-dark: #48202f;
+    --pink: #f4e6e9;
+    --pink-light: #fdf8f9;
+    --cream: #fbf7f2;
+    --gold: #b89563;
+    --text: #33262b;
+    --text-light: #796d72;
+    --border: #eadde0;
+    --shadow: 0 22px 55px rgba(73, 34, 49, 0.12);
+}
+
+body {
+    background: var(--cream);
+    color: var(--text);
+}
+
+.container { width: min(1200px, calc(100% - 48px)); }
+
+.eyebrow,
+.page-eyebrow {
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: .22em;
+}
+
+/* Vitrine */
+.header {
+    background: rgba(255, 252, 250, .84);
+    border-bottom-color: rgba(122, 63, 85, .1);
+    box-shadow: 0 7px 28px rgba(62, 29, 42, .045);
+}
+
+.logo strong { letter-spacing: -.035em; }
+
+nav a {
+    position: relative;
+    font-weight: 600;
+}
+
+nav a:not(.nav-agendar)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -8px;
+    left: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .25s ease;
+}
+
+nav a:not(.nav-agendar):hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-agendar,
+.btn-primary {
+    background: linear-gradient(135deg, #8e5065, var(--wine-dark));
+    box-shadow: 0 8px 18px rgba(72, 32, 47, .16);
+}
+
+.hero { background-position: center 35%; }
+
+.hero-overlay {
+    background: linear-gradient(90deg, rgba(34, 15, 24, .84) 0%, rgba(50, 22, 34, .57) 42%, rgba(50, 22, 34, .05) 84%);
+}
+
+.hero-content { max-width: 700px; }
+
+.hero h1 {
+    letter-spacing: -.05em;
+    text-wrap: balance;
+    text-shadow: 0 5px 28px rgba(0, 0, 0, .12);
+}
+
+.hero-text { font-size: 1.03rem; line-height: 1.8; }
+
+.hero .btn-outline {
+    background: rgba(255, 255, 255, .08);
+    backdrop-filter: blur(8px);
+}
+
+.categories,
+.collection,
+.about,
+.how { padding: clamp(76px, 10vw, 130px) 0; }
+
+.section-header h2,
+.about-content h2 { letter-spacing: -.04em; }
+
+.category-grid { gap: 18px; }
+
+.category-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    border-color: rgba(122, 63, 85, .1);
+    background: linear-gradient(145deg, #fff, #fffafa);
+}
+
+.category-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform .3s ease;
+}
+
+.category-card:hover::before { transform: scaleY(1); }
+.category-icon { background: linear-gradient(135deg, #f9edf0, #eed8de); }
+
+.collection { background: #fff; }
+
+.filter {
+    font-weight: 600;
+    letter-spacing: .03em;
+}
+
+.product-card { padding: 0; }
+.product-image { border-radius: 12px 12px 0 0; }
+
+.product-info { padding: 20px 6px 8px; }
+.product-info h3 { letter-spacing: -.025em; }
+
+.view-product {
+    background: rgba(72, 32, 47, .94);
+    box-shadow: 0 9px 20px rgba(36, 16, 25, .28);
+}
+
+.about { background: linear-gradient(135deg, #fff8f9, #f6e9ec); }
+.about-image { border-radius: 3px 56px 3px 56px; box-shadow: var(--shadow); }
+.about-image img { transition: transform .7s ease; }
+.about-image:hover img { transform: scale(1.035); }
+
+.about-features i { box-shadow: 0 6px 16px rgba(75, 43, 55, .08); }
+
+.step { padding: 30px 20px; }
+.step-number { color: #efe2e5; }
+
+.appointment { background: linear-gradient(125deg, #421b2b, #7a3f55 55%, #a56075); }
+.appointment-form { border-radius: 16px; box-shadow: 0 30px 70px rgba(24, 8, 14, .28); }
+.whatsapp-button { box-shadow: 0 10px 22px rgba(10, 75, 36, .24); }
+
+.footer { background: #29171f; }
+
+/* Área administrativa */
+.admin-layout { background: #f6f1ee; }
+
+.sidebar {
+    width: 270px;
+    padding: 38px 22px 28px;
+    background: linear-gradient(165deg, #351925 0%, #54293a 58%, #6e3d51 100%);
+    border: 0;
+    box-shadow: 12px 0 34px rgba(43, 20, 30, .12);
+}
+
+.sidebar .logo { margin: 0 12px 54px; }
+.sidebar .logo span { color: #f4dfe5; }
+.sidebar .logo strong { color: #e0b8c4; }
+
+.sidebar-nav { gap: 8px; }
+
+.sidebar-nav a {
+    color: rgba(255, 245, 247, .72);
+    padding: 12px 14px;
+    border: 1px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, .09);
+}
+
+.sidebar-nav a.active {
+    color: #fff;
+    background: rgba(255, 255, 255, .15);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .09);
+}
+
+.sidebar-nav a.active::before { left: -10px; background: #e8bdc9; }
+.sidebar-bottom { border-top-color: rgba(255, 255, 255, .13); }
+.sidebar-bottom a, .sidebar-bottom button { color: rgba(255, 245, 247, .76); }
+.sidebar-bottom button:hover, .sidebar-bottom a:hover { color: #fff; }
+
+.admin-content {
+    width: calc(100% - 270px);
+    margin-left: 270px;
+    padding: 64px clamp(28px, 5vw, 76px);
+    background: radial-gradient(circle at 94% 3%, #f9e9ed 0, transparent 24rem), #f8f5f2;
+}
+
+.admin-header, .page-header { margin-bottom: 42px; }
+.admin-header h1, .page-header h1 { color: #3e2730; letter-spacing: -.045em; }
+
+.dashboard-card,
+.finance-card,
+.admin-card,
+.quick-action,
+.despesa-resumo-card {
+    border: 1px solid rgba(115, 75, 88, .1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 10px 30px rgba(72, 41, 51, .055);
+}
+
+.dashboard-card { min-height: 142px; padding: 26px; }
+.dashboard-card strong { color: var(--wine); font-size: 2.7rem; }
+
+.finance-card { border-top: 3px solid var(--gold); }
+.finance-card strong { color: #4a2f38; }
+
+.quick-action { position: relative; overflow: hidden; }
+.quick-action::after {
+    content: "→";
+    position: absolute;
+    top: 21px;
+    right: 22px;
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: transform .2s ease;
+}
+.quick-action:hover::after { transform: translateX(4px); }
+
+.admin-card { padding: clamp(20px, 3vw, 32px); }
+.page-header > .btn { min-height: 46px; }
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    border-color: #e6d9de;
+    background: #fffcfd;
+}
+
+.input-group label { color: #694c59; }
+
+@media (max-width: 900px) {
+    .sidebar { width: 230px; }
+    .admin-content { width: calc(100% - 230px); margin-left: 230px; padding: 44px 28px; }
+}
+
+@media (max-width: 720px) {
+    .container { width: min(100% - 32px, 1200px); }
+    .hero h1 { font-size: clamp(3.25rem, 15vw, 4.4rem); }
+    .about-image { border-radius: 3px 36px 3px 36px; }
+
+    .sidebar {
+        width: 100%;
+        padding: 18px 16px 14px;
+        background: linear-gradient(110deg, #351925, #6e3d51);
+    }
+    .sidebar .logo { margin: 0 4px 14px; }
+    .sidebar-nav a { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .1); }
+    .sidebar-bottom { border-top-color: rgba(255, 255, 255, .12); }
+    .admin-content { width: 100%; margin-left: 0; padding: 30px 16px 42px; }
 }
 
 
