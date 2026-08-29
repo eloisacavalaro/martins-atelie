@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pagamentos | Maison Belle</title>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+```
+
+</head>
+
+<body>
+
+```
+<div class="admin-layout">
+
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            
+            <a href="index.html" class="logo">
+                <span>Martins</span>
+                <strong>Atélie</strong>
+            </a>
+
+        </div>
+
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="vestidos.html">
+                Vestidos
+            </a>
+
+            <a href="clientes.html">
+                Clientes
+            </a>
+
+            <a href="agendamentos.html">
+                Agendamentos
+            </a>
+
+            <a href="alugueis.html">
+                Aluguéis
+            </a>
+
+            <a href="pagamentos.html" class="active">
+                Pagamentos
+            </a>
+
+            <a href="despesas.html">
+                Despesas
+            </a>
+
+            <a href="financeiro.html">
+                Financeiro
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                ← Voltar para o site
+            </a>
+
+            <button id="logoutBtn">
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================================
+         CONTEÚDO
+    ========================================= -->
+
+    <main class="admin-content">
+
+
+        <!-- CABEÇALHO -->
+
+        <header class="page-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    Administração
+                </p>
+
+                <h1>
+                    Pagamentos
+                </h1>
+
+                <p>
+                    Gerencie os pagamentos realizados pelos clientes.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="novoPagamentoBtn"
+            >
+                + Novo pagamento
+            </button>
+
+        </header>
+
+
+
+        <!-- MENSAGEM -->
+
+        <p id="mensagem"></p>
+
+
+
+        <!-- =========================================
+             FORMULÁRIO
+        ========================================= -->
+
+        <section
+            class="admin-card"
+            id="formularioContainer"
+            style="display: none;"
+        >
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2 id="tituloFormulario">
+                        Novo pagamento
+                    </h2>
+
+                    <p>
+                        Registre os dados do pagamento.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <form id="pagamentoForm">
+
+
+                <!-- ALUGUEL -->
+
+                <div class="input-group">
+
+                    <label for="aluguel_id">
+                        Aluguel
+                    </label>
+
+                    <select
+                        id="aluguel_id"
+                        required
+                    >
+
+                        <option value="">
+                            Selecione o aluguel
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- VALOR -->
+
+                <div class="form-row">
+
+                    <div class="input-group">
+
+                        <label for="valor">
+                            Valor
+                        </label>
+
+                        <input
+                            type="number"
+                            id="valor"
+                            placeholder="0,00"
+                            step="0.01"
+                            min="0.01"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- FORMA -->
+
+                    <div class="input-group">
+
+                        <label for="forma_pagamento">
+                            Forma de pagamento
+                        </label>
+
+                        <select
+                            id="forma_pagamento"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="dinheiro">
+                                Dinheiro
+                            </option>
+
+                            <option value="pix">
+                                PIX
+                            </option>
+
+                            <option value="cartao_credito">
+                                Cartão de crédito
+                            </option>
+
+                            <option value="cartao_debito">
+                                Cartão de débito
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PARCELAS + DATA -->
+
+                <div class="form-row">
+
+                    <div class="input-group">
+
+                        <label for="parcelas">
+                            Parcelas
+                        </label>
+
+                        <input
+                            type="number"
+                            id="parcelas"
+                            min="1"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="data_pagamento">
+                            Data do pagamento
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            id="data_pagamento"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OBSERVAÇÕES -->
+
+                <div class="input-group">
+
+                    <label for="observacoes">
+                        Observações
+                    </label>
+
+                    <textarea
+                        id="observacoes"
+                        rows="4"
+                        placeholder="Observações sobre o pagamento..."
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- BOTÕES -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="salvarBtn"
+                    >
+                        Registrar pagamento
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn"
+                        id="cancelarBtn"
+                    >
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =========================================
+             LISTA
+        ========================================= -->
+
+        <section class="admin-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Pagamentos registrados
+                    </h2>
+
+                    <p id="contadorPagamentos">
+                        Carregando...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="pagamentosLista">
+
+                <p>
+                    Carregando pagamentos...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+    /* =========================================
+       CONFIGURAÇÃO
+    ========================================= */
+
+    const API_URL = "http://localhost:3000";
+
+    const token = localStorage.getItem("token");
+
+
+    if (!token) {
+
+        window.location.href = "login.html";
+
+    }
+
+
+
+    /* =========================================
+       ELEMENTOS
+    ========================================= */
+
+    const lista =
+        document.getElementById("pagamentosLista");
+
+    const contador =
+        document.getElementById("contadorPagamentos");
+
+    const formularioContainer =
+        document.getElementById("formularioContainer");
+
+    const formulario =
+        document.getElementById("pagamentoForm");
+
+    const tituloFormulario =
+        document.getElementById("tituloFormulario");
+
+    const salvarBtn =
+        document.getElementById("salvarBtn");
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+    const novoPagamentoBtn =
+        document.getElementById("novoPagamentoBtn");
+
+    const cancelarBtn =
+        document.getElementById("cancelarBtn");
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+    const aluguelSelect =
+        document.getElementById("aluguel_id");
+
+
+
+    /* =========================================
+       ID DO PAGAMENTO
+    ========================================= */
+
+    let pagamentoEditandoId = null;
+
+
+
+    /* =========================================
+       LOGOUT
+    ========================================= */
+
+    logoutBtn.addEventListener("click", () => {
+
+        localStorage.removeItem("token");
+
+        window.location.href = "login.html";
+
+    });
+
+
+
+    /* =========================================
+       VERIFICAR RESPOSTA
+    ========================================= */
+
+    async function verificarResposta(resposta) {
+
+        if (
+            resposta.status === 401 ||
+            resposta.status === 403
+        ) {
+
+            localStorage.removeItem("token");
+
+            window.location.href = "login.html";
+
+            return null;
+
+        }
+
+        const dados = await resposta.json();
+
+        return dados;
+
+    }
+
+
+
+    /* =========================================
+       CARREGAR ALUGUÉIS
+    ========================================= */
+
+    async function carregarAlugueis() {
+
+        try {
+
+            const resposta = await fetch(
+                `${API_URL}/alugueis`,
+                {
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+            const alugueis =
+                await verificarResposta(resposta);
+
+
+            if (!alugueis) {
+                return;
+            }
+
+
+            if (!resposta.ok) {
+
+                aluguelSelect.innerHTML = `
+                    <option value="">
+                        Erro ao carregar aluguéis
+                    </option>
+                `;
+
+                return;
+
+            }
+
+
+            aluguelSelect.innerHTML = `
+                <option value="">
+                    Selecione o aluguel
+                </option>
+            `;
+
+
+            alugueis.forEach(aluguel => {
+
+                const option =
+                    document.createElement("option");
+
+
+                option.value =
+                    aluguel.id;
+
+
+                option.textContent =
+                    `#${aluguel.id} — ${aluguel.cliente_nome} — ${aluguel.vestido_nome} — ${formatarMoeda(aluguel.valor_total)}`;
+
+
+                aluguelSelect.appendChild(option);
+
+            });
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar aluguéis:",
+                erro
+            );
+
+        }
+
+    }
+
+
+
+    /* =========================================
+       FORMATAR MOEDA
+    ========================================= */
+
+    function formatarMoeda(valor) {
+
+        return Number(valor).toLocaleString(
+            "pt-BR",
+            {
+                style: "currency",
+                currency: "BRL"
+            }
+        );
+
+    }
+
+
+
+    /* =========================================
+       FORMATAR DATA
+    ========================================= */
+
+    function formatarData(data) {
+
+        if (!data) {
+            return "Data não informada";
+        }
+
+
+        return new Date(data).toLocaleString(
+            "pt-BR",
+            {
+                dateStyle: "short",
+                timeStyle: "short"
+            }
+        );
+
+    }
+
+
+
+    /* =========================================
+       NOME DA FORMA DE PAGAMENTO
+    ========================================= */
+
+    function nomeFormaPagamento(forma) {
+
+        const formas = {
+
+            dinheiro:
+                "Dinheiro",
+
+            pix:
+                "PIX",
+
+            cartao_credito:
+                "Cartão de crédito",
+
+            cartao_debito:
+                "Cartão de débito"
+
+        };
+
+
+        return formas[forma] || forma;
+
+    }
+
+
+
+    /* =========================================
+       ABRIR FORMULÁRIO
+    ========================================= */
+
+    novoPagamentoBtn.addEventListener(
+        "click",
+        async () => {
+
+            pagamentoEditandoId = null;
+
+            formulario.reset();
+
+            tituloFormulario.textContent =
+                "Novo pagamento";
+
+            salvarBtn.textContent =
+                "Registrar pagamento";
+
+
+            /*
+             * Data atual
+             */
+
+            const agora =
+                new Date();
+
+
+            const offset =
+                agora.getTimezoneOffset();
+
+
+            const dataLocal =
+                new Date(
+                    agora.getTime() -
+                    offset * 60000
+                )
+                .toISOString()
+                .slice(0, 16);
+
+
+            document.getElementById(
+                "data_pagamento"
+            ).value = dataLocal;
+
+
+            formularioContainer.style.display =
+                "block";
+
+
+            mensagem.textContent = "";
+
+
+            formularioContainer.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+
+
+    /* =========================================
+       CANCELAR
+    ========================================= */
+
+    cancelarBtn.addEventListener(
+        "click",
+        () => {
+
+            pagamentoEditandoId = null;
+
+            formulario.reset();
+
+            formularioContainer.style.display =
+                "none";
+
+            mensagem.textContent = "";
+
+        }
+    );
+
+
+
+    /* =========================================
+       CARREGAR PAGAMENTOS
+    ========================================= */
+
+    async function carregarPagamentos() {
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `${API_URL}/pagamentos`,
+                    {
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+
+            const pagamentos =
+                await verificarResposta(resposta);
+
+
+            if (!pagamentos) {
+                return;
+            }
+
+
+            if (!resposta.ok) {
+
+                lista.innerHTML =
+                    "<p>Erro ao carregar pagamentos.</p>";
+
+                return;
+
+            }
+
+
+            contador.textContent =
+                `${pagamentos.length} pagamento${pagamentos.length === 1 ? "" : "s"} registrado${pagamentos.length === 1 ? "" : "s"}`;
+
+
+            lista.innerHTML = "";
+
+
+            if (pagamentos.length === 0) {
+
+                lista.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <h3>
+                            Nenhum pagamento registrado
+                        </h3>
+
+                        <p>
+                            Comece registrando seu primeiro pagamento.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            pagamentos.forEach(pagamento => {
+
+                const item =
+                    document.createElement("div");
+
+
+                item.className =
+                    "cliente-item";
+
+
+                item.innerHTML = `
+
+                    <div class="cliente-info">
+
+                        <div class="cliente-avatar">
+
+                            R$
+
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                ${pagamento.cliente_nome}
+                            </h3>
+
+                            <p>
+                                Vestido:
+                                ${pagamento.vestido_nome}
+                            </p>
+
+                            <p>
+                                ${nomeFormaPagamento(
+                                    pagamento.forma_pagamento
+                                )}
+                                ${pagamento.parcelas > 1
+                                    ? `• ${pagamento.parcelas} parcelas`
+                                    : ""
+                                }
+                            </p>
+
+                            <p>
+                                ${formatarData(
+                                    pagamento.data_pagamento
+                                )}
+                            </p>
+
+                            ${
+                                pagamento.observacoes
+                                ? `
+                                    <p class="cliente-observacao">
+                                        ${pagamento.observacoes}
+                                    </p>
+                                `
+                                : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="cliente-acoes">
+
+                        <strong>
+                            ${formatarMoeda(
+                                pagamento.valor
+                            )}
+                        </strong>
+
+
+                        <button
+                            type="button"
+                            class="btn"
+                            onclick="editarPagamento(${pagamento.id})"
+                        >
+                            Editar
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            onclick="excluirPagamento(${pagamento.id})"
+                        >
+                            Excluir
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                lista.appendChild(item);
+
+            });
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar pagamentos:",
+                erro
+            );
+
+
+            lista.innerHTML =
+                "<p>Não foi possível conectar ao servidor.</p>";
+
+        }
+
+    }
+
+
+
+    /* =========================================
+       EDITAR PAGAMENTO
+    ========================================= */
+
+    async function editarPagamento(id) {
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `${API_URL}/pagamentos/${id}`,
+                    {
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+
+            const pagamento =
+                await verificarResposta(resposta);
+
+
+            if (!pagamento) {
+                return;
+            }
+
+
+            if (!resposta.ok) {
+
+                alert(
+                    pagamento.erro ||
+                    "Erro ao carregar pagamento."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Preencher formulário
+             */
+
+            aluguelSelect.value =
+                pagamento.aluguel_id;
+
+
+            document.getElementById(
+                "valor"
+            ).value =
+                pagamento.valor;
+
+
+            document.getElementById(
+                "forma_pagamento"
+            ).value =
+                pagamento.forma_pagamento;
+
+
+            document.getElementById(
+                "parcelas"
+            ).value =
+                pagamento.parcelas;
+
+
+            document.getElementById(
+                "observacoes"
+            ).value =
+                pagamento.observacoes || "";
+
+
+            /*
+             * Converter data para datetime-local
+             */
+
+            if (pagamento.data_pagamento) {
+
+                const data =
+                    new Date(
+                        pagamento.data_pagamento
+                    );
+
+
+                const offset =
+                    data.getTimezoneOffset();
+
+
+                const dataLocal =
+                    new Date(
+                        data.getTime() -
+                        offset * 60000
+                    )
+                    .toISOString()
+                    .slice(0, 16);
+
+
+                document.getElementById(
+                    "data_pagamento"
+                ).value =
+                    dataLocal;
+
+            }
+
+
+            pagamentoEditandoId = id;
+
+
+            tituloFormulario.textContent =
+                "Editar pagamento";
+
+
+            salvarBtn.textContent =
+                "Salvar alterações";
+
+
+            formularioContainer.style.display =
+                "block";
+
+
+            mensagem.textContent = "";
+
+
+            formularioContainer.scrollIntoView({
+                behavior: "smooth"
+            });
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            alert(
+                "Não foi possível carregar o pagamento."
+            );
+
+        }
+
+    }
+
+
+
+    /* =========================================
+       EXCLUIR PAGAMENTO
+    ========================================= */
+
+    async function excluirPagamento(id) {
+
+        const confirmar =
+            confirm(
+                "Tem certeza que deseja excluir este pagamento?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `${API_URL}/pagamentos/${id}`,
+                    {
+                        method: "DELETE",
+
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+
+            const resultado =
+                await verificarResposta(resposta);
+
+
+            if (!resultado) {
+                return;
+            }
+
+
+            if (!resposta.ok) {
+
+                alert(
+                    resultado.erro ||
+                    "Erro ao excluir pagamento."
+                );
+
+                return;
+
+            }
+
+
+            mensagem.textContent =
+                "Pagamento excluído com sucesso!";
+
+
+            carregarPagamentos();
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            alert(
+                "Não foi possível conectar ao servidor."
+            );
+
+        }
+
+    }
+
+
+
+    /* =========================================
+       SALVAR PAGAMENTO
+    ========================================= */
+
+    formulario.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+
+            const dados = {
+
+                aluguel_id:
+                    Number(
+                        document.getElementById(
+                            "aluguel_id"
+                        ).value
+                    ),
+
+                valor:
+                    Number(
+                        document.getElementById(
+                            "valor"
+                        ).value
+                    ),
+
+                forma_pagamento:
+                    document.getElementById(
+                        "forma_pagamento"
+                    ).value,
+
+                parcelas:
+                    Number(
+                        document.getElementById(
+                            "parcelas"
+                        ).value
+                    ),
+
+                data_pagamento:
+                    document.getElementById(
+                        "data_pagamento"
+                    ).value,
+
+                observacoes:
+                    document.getElementById(
+                        "observacoes"
+                    ).value
+
+            };
+
+
+            try {
+
+                salvarBtn.disabled = true;
+
+                salvarBtn.textContent =
+                    "Salvando...";
+
+
+                let url;
+
+                let metodo;
+
+
+                if (pagamentoEditandoId) {
+
+                    url =
+                        `${API_URL}/pagamentos/${pagamentoEditandoId}`;
+
+                    metodo =
+                        "PUT";
+
+                } else {
+
+                    url =
+                        `${API_URL}/pagamentos`;
+
+                    metodo =
+                        "POST";
+
+                }
+
+
+                const resposta =
+                    await fetch(
+                        url,
+                        {
+                            method: metodo,
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            },
+
+                            body:
+                                JSON.stringify(dados)
+
+                        }
+                    );
+
+
+                const resultado =
+                    await verificarResposta(resposta);
+
+
+                if (!resultado) {
+                    return;
+                }
+
+
+                if (!resposta.ok) {
+
+                    mensagem.textContent =
+                        resultado.erro ||
+                        "Erro ao salvar pagamento.";
+
+                    return;
+
+                }
+
+
+                if (pagamentoEditandoId) {
+
+                    mensagem.textContent =
+                        "Pagamento atualizado com sucesso!";
+
+                } else {
+
+                    mensagem.textContent =
+                        "Pagamento registrado com sucesso!";
+
+                }
+
+
+                formulario.reset();
+
+                pagamentoEditandoId = null;
+
+
+                tituloFormulario.textContent =
+                    "Novo pagamento";
+
+
+                salvarBtn.textContent =
+                    "Registrar pagamento";
+
+
+                formularioContainer.style.display =
+                    "none";
+
+
+                carregarPagamentos();
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao salvar pagamento:",
+                    erro
+                );
+
+
+                mensagem.textContent =
+                    "Não foi possível conectar ao servidor.";
+
+            } finally {
+
+                salvarBtn.disabled = false;
+
+
+                salvarBtn.textContent =
+                    pagamentoEditandoId
+                        ? "Salvar alterações"
+                        : "Registrar pagamento";
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================================
+       INICIAR
+    ========================================= */
+
+    async function iniciar() {
+
+        await carregarAlugueis();
+
+        await carregarPagamentos();
+
+    }
+
+
+    iniciar();
+
+
+</script>
+```
+
+</body>
+
+</html>

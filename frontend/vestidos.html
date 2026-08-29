@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    ```
+    <title>Vestidos | Maison Belle</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    ```
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        ```
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <a href="index.html" class="logo">
+                <span>Martins</span>
+                <strong>Atélie</strong>
+            </a>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="vestidos.html" class="active">
+                    Vestidos
+                </a>
+
+                <a href="clientes.html">
+                    Clientes
+                </a>
+
+                <a href="agendamentos.html">
+                    Agendamentos
+                </a>
+
+                <a href="alugueis.html">
+                    Aluguéis
+                </a>
+
+                <a href="pagamentos.html">
+                    Pagamentos
+                </a>
+
+                <a href="despesas.html">
+                    Despesas
+                </a>
+
+                <a href="financeiro.html">
+                    Financeiro
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="index.html">
+                    ← Voltar para o site
+                </a>
+
+                <button type="button" id="logoutBtn">
+                    Sair
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= CONTEÚDO ================= -->
+
+        <main class="admin-content">
+
+            <header class="page-header">
+
+                <div>
+
+                    <p class="page-eyebrow">
+                        Administração
+                    </p>
+
+                    <h1>
+                        Vestidos
+                    </h1>
+
+                    <p>
+                        Cadastre e gerencie os vestidos disponíveis na Maison Belle.
+                    </p>
+
+                </div>
+
+                <button type="button" class="btn btn-primary" id="novoVestidoBtn">
+                    + Novo vestido
+                </button>
+
+            </header>
+
+
+            <!-- ================= MENSAGEM ================= -->
+
+            <p id="mensagem"></p>
+
+
+            <!-- ================= FORMULÁRIO ================= -->
+
+            <section class="admin-card" id="formularioContainer" style="display: none;">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2 id="tituloFormulario">
+                            Novo vestido
+                        </h2>
+
+                        <p>
+                            Preencha os dados do vestido.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form id="vestidoForm">
+
+                    <div class="form-row">
+
+                        <div class="input-group">
+
+                            <label for="nome">
+                                Nome do vestido
+                            </label>
+
+                            <input type="text" id="nome" placeholder="Ex: Vestido Aurora" required>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="categoria">
+                                Categoria
+                            </label>
+
+                            <select id="categoria" required>
+
+                                <option value="">
+                                    Selecione
+                                </option>
+
+                                <option value="noiva">
+                                    Noiva
+                                </option>
+
+                                <option value="debutante">
+                                    Debutante
+                                </option>
+
+                                <option value="daminha">
+                                    Daminha
+                                </option>
+
+                                <option value="terno">
+                                    Terno
+                                </option>
+
+                                <option value="acessorio">
+                                    Acessório
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="input-group">
+
+                            <label for="tamanho">
+                                Tamanho
+                            </label>
+
+                            <input type="text" id="tamanho" placeholder="Ex: 38">
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="cor">
+                                Cor
+                            </label>
+
+                            <input type="text" id="cor" placeholder="Ex: Branco">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="descricao">
+                            Descrição
+                        </label>
+
+                        <textarea id="descricao" rows="4" placeholder="Descreva o vestido..."></textarea>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="imagem">
+                            Foto do vestido
+                        </label>
+
+                        <input type="file" id="imagem" accept="image/*">
+
+                        <small id="imagemAviso"></small>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="preco_aluguel">
+                            Preço do aluguel
+                        </label>
+
+                        <input type="number" id="preco_aluguel" placeholder="Ex: 300" min="0" step="0.01" required>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>
+
+                            <input type="checkbox" id="confeccionado">
+
+                            Vestido confeccionado
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>
+
+                            <input type="checkbox" id="disponivel" checked>
+
+                            Disponível para aluguel
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button type="submit" class="btn btn-primary" id="botaoSalvar">
+                            Cadastrar vestido
+                        </button>
+
+                        <button type="button" class="btn" id="botaoCancelar">
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- ================= LISTA ================= -->
+
+            <section class="admin-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Vestidos cadastrados
+                        </h2>
+
+                        <p id="contadorVestidos">
+                            Carregando...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="vestidosLista">
+
+                    <p>
+                        Carregando vestidos...
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+        ```
+
+    </div>
+
+    <script>
+
+        const API_URL = "http://localhost:3000";
+
+        const CLOUD_NAME = "csdnsmzt";
+
+        const UPLOAD_PRESET = "vestidos";
+
+        const token = localStorage.getItem("token");
+
+
+        /* =========================================
+           VERIFICAR LOGIN
+        ========================================= */
+
+        if (!token) {
+
+            window.location.href = "login.html";
+
+        }
+
+
+        /* =========================================
+           ELEMENTOS
+        ========================================= */
+
+        const form =
+            document.getElementById("vestidoForm");
+
+        const lista =
+            document.getElementById("vestidosLista");
+
+        const contador =
+            document.getElementById("contadorVestidos");
+
+        const mensagem =
+            document.getElementById("mensagem");
+
+        const formularioContainer =
+            document.getElementById("formularioContainer");
+
+        const novoVestidoBtn =
+            document.getElementById("novoVestidoBtn");
+
+        const botaoSalvar =
+            document.getElementById("botaoSalvar");
+
+        const botaoCancelar =
+            document.getElementById("botaoCancelar");
+
+        const tituloFormulario =
+            document.getElementById("tituloFormulario");
+
+        const imagemInput =
+            document.getElementById("imagem");
+
+        const imagemAviso =
+            document.getElementById("imagemAviso");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+
+        /* =========================================
+           CONTROLE DE EDIÇÃO
+        ========================================= */
+
+        let vestidoEditandoId = null;
+
+        let imagemAtual = null;
+
+
+        /* =========================================
+           LOGOUT
+        ========================================= */
+
+        logoutBtn.addEventListener("click", () => {
+
+            localStorage.removeItem("token");
+
+            window.location.href = "login.html";
+
+        });
+
+
+        /* =========================================
+           NOVO VESTIDO
+        ========================================= */
+
+        novoVestidoBtn.addEventListener("click", () => {
+
+            vestidoEditandoId = null;
+
+            imagemAtual = null;
+
+            form.reset();
+
+            tituloFormulario.textContent =
+                "Novo vestido";
+
+            botaoSalvar.textContent =
+                "Cadastrar vestido";
+
+            imagemAviso.textContent = "";
+
+            formularioContainer.style.display =
+                "block";
+
+            mensagem.textContent = "";
+
+            formularioContainer.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        });
+
+
+        /* =========================================
+           CANCELAR
+        ========================================= */
+
+        botaoCancelar.addEventListener("click", () => {
+
+            vestidoEditandoId = null;
+
+            imagemAtual = null;
+
+            form.reset();
+
+            tituloFormulario.textContent =
+                "Novo vestido";
+
+            botaoSalvar.textContent =
+                "Cadastrar vestido";
+
+            imagemAviso.textContent = "";
+
+            formularioContainer.style.display =
+                "none";
+
+            mensagem.textContent = "";
+
+        });
+
+
+        /* =========================================
+           CARREGAR VESTIDOS
+        ========================================= */
+
+        async function carregarVestidos() {
+
+            try {
+
+                const resposta = await fetch(
+                    `${API_URL}/vestidos`
+                );
+
+                const vestidos =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    lista.innerHTML =
+                        "<p>Erro ao carregar vestidos.</p>";
+
+                    return;
+                }
+
+
+                contador.textContent =
+                    `${vestidos.length} vestido${vestidos.length === 1 ? "" : "s"} cadastrado${vestidos.length === 1 ? "" : "s"}`;
+
+
+                lista.innerHTML = "";
+
+
+                if (vestidos.length === 0) {
+
+                    lista.innerHTML = `
+                <div class="empty-state">
+
+                    <h3>
+                        Nenhum vestido cadastrado
+                    </h3>
+
+                    <p>
+                        Comece cadastrando seu primeiro vestido.
+                    </p>
+
+                </div>
+            `;
+
+                    return;
+                }
+
+
+                vestidos.forEach(vestido => {
+
+                    const item =
+                        document.createElement("div");
+
+                    item.className =
+                        "vestido-admin";
+
+
+                    item.innerHTML = `
+
+                <img
+                    src="${vestido.imagem_url || "https://via.placeholder.com/150"}"
+                    alt="${vestido.nome}"
+                >
+
+                <div class="vestido-admin-info">
+
+                    <h3>
+                        ${vestido.nome}
+                    </h3>
+
+                    <p>
+                        Categoria:
+                        ${vestido.categoria || "Não informada"}
+                    </p>
+
+                    <p>
+                        Tamanho:
+                        ${vestido.tamanho || "Não informado"}
+                    </p>
+
+                    <p>
+                        Cor:
+                        ${vestido.cor || "Não informada"}
+                    </p>
+
+                    <p>
+                        Aluguel:
+                        R$ ${Number(
+                        vestido.preco_aluguel || 0
+                    ).toFixed(2).replace(".", ",")}
+                    </p>
+
+                    <p>
+                        ${vestido.confeccionado
+                            ? "Confeccionado"
+                            : "Não confeccionado"
+                        }
+                    </p>
+
+                    <p>
+                        ${vestido.disponivel
+                            ? "Disponível para aluguel"
+                            : "Indisponível"
+                        }
+                    </p>
+
+
+                    <div class="vestido-acoes">
+
+                        <button
+                            type="button"
+                            class="btn"
+                            onclick="editarVestido(${vestido.id})"
+                        >
+                            Editar
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            onclick="excluirVestido(${vestido.id})"
+                        >
+                            Excluir
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+                    lista.appendChild(item);
+
+                });
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar vestidos:",
+                    erro
+                );
+
+                lista.innerHTML =
+                    "<p>Não foi possível conectar ao servidor.</p>";
+
+            }
+
+        }
+
+
+        /* =========================================
+           EDITAR VESTIDO
+        ========================================= */
+
+        async function editarVestido(id) {
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `${API_URL}/vestidos/${id}`
+                    );
+
+
+                const vestido =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    alert(
+                        vestido.erro ||
+                        "Erro ao carregar vestido."
+                    );
+
+                    return;
+                }
+
+
+                document.getElementById("nome").value =
+                    vestido.nome || "";
+
+                document.getElementById("categoria").value =
+                    vestido.categoria || "";
+
+                document.getElementById("tamanho").value =
+                    vestido.tamanho || "";
+
+                document.getElementById("cor").value =
+                    vestido.cor || "";
+
+                document.getElementById("descricao").value =
+                    vestido.descricao || "";
+
+                document.getElementById("preco_aluguel").value =
+                    vestido.preco_aluguel || "";
+
+                document.getElementById("confeccionado").checked =
+                    Boolean(vestido.confeccionado);
+
+                document.getElementById("disponivel").checked =
+                    Boolean(vestido.disponivel);
+
+
+                vestidoEditandoId = id;
+
+                imagemAtual =
+                    vestido.imagem_url || null;
+
+
+                tituloFormulario.textContent =
+                    "Editar vestido";
+
+                botaoSalvar.textContent =
+                    "Salvar alterações";
+
+
+                if (imagemAtual) {
+
+                    imagemAviso.textContent =
+                        "Deixe vazio para manter a imagem atual.";
+
+                } else {
+
+                    imagemAviso.textContent =
+                        "Este vestido não possui imagem.";
+
+                }
+
+
+                formularioContainer.style.display =
+                    "block";
+
+
+                formularioContainer.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível carregar o vestido."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           EXCLUIR VESTIDO
+        ========================================= */
+
+        async function excluirVestido(id) {
+
+            const confirmar =
+                confirm(
+                    "Tem certeza que deseja excluir este vestido?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `${API_URL}/vestidos/${id}`,
+                        {
+                            method: "DELETE",
+
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                const resultado =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    alert(
+                        resultado.erro ||
+                        "Erro ao excluir vestido."
+                    );
+
+                    return;
+                }
+
+
+                mensagem.textContent =
+                    "Vestido excluído com sucesso!";
+
+
+                carregarVestidos();
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível conectar ao servidor."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           ENVIAR IMAGEM PARA CLOUDINARY
+        ========================================= */
+
+        async function enviarImagem(imagem) {
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "file",
+                imagem
+            );
+
+
+            formData.append(
+                "upload_preset",
+                UPLOAD_PRESET
+            );
+
+
+            const resposta =
+                await fetch(
+                    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            const resultado =
+                await resposta.json();
+
+
+            if (!resposta.ok) {
+
+                console.error(
+                    "Erro Cloudinary:",
+                    resultado
+                );
+
+                throw new Error(
+                    "Erro ao enviar imagem."
+                );
+
+            }
+
+
+            return resultado.secure_url;
+
+        }
+
+
+        /* =========================================
+           SALVAR VESTIDO
+        ========================================= */
+
+        form.addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+
+                try {
+
+                    botaoSalvar.disabled = true;
+
+                    botaoSalvar.textContent =
+                        "Salvando...";
+
+
+                    mensagem.textContent =
+                        "Salvando vestido...";
+
+
+                    /* ===============================
+                       IMAGEM
+                    =============================== */
+
+                    let imagemUrl =
+                        imagemAtual;
+
+
+                    const imagem =
+                        imagemInput.files[0];
+
+
+                    if (imagem) {
+
+                        mensagem.textContent =
+                            "Enviando imagem...";
+
+
+                        imagemUrl =
+                            await enviarImagem(imagem);
+
+                    }
+
+
+                    /* ===============================
+                       DADOS
+                    =============================== */
+
+                    const dados = {
+
+                        nome:
+                            document.getElementById("nome").value,
+
+                        categoria:
+                            document.getElementById("categoria").value,
+
+                        tamanho:
+                            document.getElementById("tamanho").value || "",
+
+                        cor:
+                            document.getElementById("cor").value || "",
+
+                        descricao:
+                            document.getElementById("descricao").value || "",
+
+                        preco_aluguel:
+                            Number(
+                                document.getElementById(
+                                    "preco_aluguel"
+                                ).value
+                            ),
+
+                        confeccionado:
+                            document.getElementById(
+                                "confeccionado"
+                            ).checked,
+
+                        imagem_url:
+                            imagemUrl,
+
+                        disponivel:
+                            document.getElementById(
+                                "disponivel"
+                            ).checked
+
+                    };
+
+
+                    /* ===============================
+                       POST OU PUT
+                    =============================== */
+
+                    let url;
+
+                    let metodo;
+
+
+                    if (vestidoEditandoId) {
+
+                        url =
+                            `${API_URL}/vestidos/${vestidoEditandoId}`;
+
+                        metodo =
+                            "PUT";
+
+                    } else {
+
+                        url =
+                            `${API_URL}/vestidos`;
+
+                        metodo =
+                            "POST";
+
+                    }
+
+
+                    /* ===============================
+                       API
+                    =============================== */
+
+                    const resposta =
+                        await fetch(
+                            url,
+                            {
+                                method: metodo,
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        `Bearer ${token}`
+
+                                },
+
+                                body:
+                                    JSON.stringify(dados)
+
+                            }
+                        );
+
+
+                    const resultado =
+                        await resposta.json();
+
+
+                    if (!resposta.ok) {
+
+                        mensagem.textContent =
+                            resultado.erro ||
+                            "Erro ao salvar vestido.";
+
+                        return;
+                    }
+
+
+                    /* ===============================
+                       SUCESSO
+                    =============================== */
+
+                    if (vestidoEditandoId) {
+
+                        mensagem.textContent =
+                            "Vestido atualizado com sucesso!";
+
+                    } else {
+
+                        mensagem.textContent =
+                            "Vestido cadastrado com sucesso!";
+
+                    }
+
+
+                    form.reset();
+
+                    vestidoEditandoId = null;
+
+                    imagemAtual = null;
+
+
+                    tituloFormulario.textContent =
+                        "Novo vestido";
+
+                    botaoSalvar.textContent =
+                        "Cadastrar vestido";
+
+                    imagemAviso.textContent = "";
+
+
+                    formularioContainer.style.display =
+                        "none";
+
+
+                    carregarVestidos();
+
+
+                } catch (erro) {
+
+                    console.error(erro);
+
+                    mensagem.textContent =
+                        "Não foi possível salvar o vestido.";
+
+                } finally {
+
+                    botaoSalvar.disabled =
+                        false;
+
+                    botaoSalvar.textContent =
+                        vestidoEditandoId
+                            ? "Salvar alterações"
+                            : "Cadastrar vestido";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           INICIAR
+        ========================================= */
+
+        carregarVestidos();
+
+    </script>
+
+</body>
+
+</html>

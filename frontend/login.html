@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Login | Martins Ateliê</title>
+
+    <meta name="description" content="Área administrativa Martins Atélie.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+    
+
+</head>
+
+<body>
+
+
+    <main class="login-page">
+
+        <div class="login-background"></div>
+
+        <div class="login-container">
+
+            <a href="index.html" class="logo login-logo">
+                <span>Martins</span>
+                <strong>Ateliê</strong>
+            </a>
+
+            <div class="login-card">
+
+                <div class="login-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <p class="eyebrow">
+                    ÁREA RESTRITA
+                </p>
+
+                <h1>
+                    Bem-vinda de volta
+                </h1>
+
+                <p class="login-description">
+                    Entre com sua conta para acessar
+                    o painel administrativo.
+                </p>
+
+                <form id="loginForm">
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-envelope"></i>
+
+                            <input type="email" id="email" placeholder="seu@email.com" required>
+
+                        </div>
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="senha">
+                            Senha
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input type="password" id="senha" placeholder="Sua senha" required>
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary login-button">
+                        <span>Entrar</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <p id="loginErro" class="login-error"></p>
+
+                </form>
+
+            </div>
+
+            <a href="index.html" class="back-to-site">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar para o site
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        const form =
+            document.getElementById("loginForm");
+
+        const loginErro =
+            document.getElementById("loginErro");
+
+
+        form.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                const email =
+                    document.getElementById("email").value;
+
+                const senha =
+                    document.getElementById("senha").value;
+
+
+                const button =
+                    form.querySelector("button");
+
+                button.disabled = true;
+
+                button.querySelector("span").textContent =
+                    "Entrando...";
+
+
+                loginErro.textContent = "";
+
+
+                try {
+
+                    const resposta =
+                        await fetch(
+                            "http://localhost:3000/login",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    email,
+                                    senha
+                                })
+                            }
+                        );
+
+
+                    const dados =
+                        await resposta.json();
+
+
+                    if (!resposta.ok) {
+
+                        loginErro.textContent =
+                            dados.erro ||
+                            "E-mail ou senha incorretos.";
+
+                        return;
+                    }
+
+
+                    localStorage.setItem(
+                        "token",
+                        dados.token
+                    );
+
+
+                    window.location.href =
+                        "admin.html";
+
+
+                } catch (erro) {
+
+                    loginErro.textContent =
+                        "Não foi possível conectar ao servidor.";
+
+                    console.error(erro);
+
+                } finally {
+
+                    button.disabled = false;
+
+                    button.querySelector("span").textContent =
+                        "Entrar";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

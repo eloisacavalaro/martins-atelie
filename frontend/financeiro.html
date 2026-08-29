@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    ```
+    <title>Financeiro | Maison Belle</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    ```
+
+</head>
+
+<body>
+
+    ```
+    <div class="admin-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <a href="index.html" class="logo">
+                <span>Martins</span>
+                <strong>Atélie</strong>
+            </a>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="admin.html">
+                    Dashboard
+                </a>
+
+                <a href="vestidos.html">
+                    Vestidos
+                </a>
+
+                <a href="clientes.html">
+                    Clientes
+                </a>
+
+                <a href="agendamentos.html">
+                    Agendamentos
+                </a>
+
+                <a href="alugueis.html">
+                    Aluguéis
+                </a>
+                <a href="pagamentos.html">
+                    Pagamentos
+                </a>
+                
+                <a href="despesas.html">
+                    Despesas
+                </a>
+
+                <a href="financeiro.html" class="active">
+                    Financeiro
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="index.html">
+                    ← Voltar para o site
+                </a>
+
+                <button id="logoutBtn">
+                    Sair
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= CONTEÚDO ================= -->
+
+        <main class="admin-content">
+
+            <header class="page-header">
+
+                <div>
+
+                    <p class="page-eyebrow">
+                        Administração
+                    </p>
+
+                    <h1>
+                        Financeiro
+                    </h1>
+
+                    <p>
+                        Acompanhe as receitas, despesas e resultados da Maison Belle.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= MENSAGEM ================= -->
+
+            <p id="mensagem"></p>
+
+
+            <!-- ================= RESUMO ================= -->
+
+            <section class="admin-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <p class="page-eyebrow">
+                            VISÃO GERAL
+                        </p>
+
+                        <h2>
+                            Resumo financeiro
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="finance-cards">
+
+                    <div class="finance-card">
+
+                        <span>
+                            Receita
+                        </span>
+
+                        <strong id="receita">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="finance-card">
+
+                        <span>
+                            Despesas
+                        </span>
+
+                        <strong id="despesas">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="finance-card">
+
+                        <span>
+                            Lucro
+                        </span>
+
+                        <strong id="lucro">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FILTRO ================= -->
+
+            <section class="admin-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Período
+                        </h2>
+
+                        <p>
+                            Consulte os resultados de um período específico.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="input-group">
+
+                        <label for="inicio">
+                            Data inicial
+                        </label>
+
+                        <input type="date" id="inicio">
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="fim">
+                            Data final
+                        </label>
+
+                        <input type="date" id="fim">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button type="button" class="btn btn-primary" id="filtrarBtn">
+                        Aplicar filtro
+                    </button>
+
+                    <button type="button" class="btn" id="limparFiltroBtn">
+                        Limpar
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RECEITAS ================= -->
+
+            <section class="admin-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <p class="page-eyebrow">
+                            ENTRADAS
+                        </p>
+
+                        <h2>
+                            Receitas
+                        </h2>
+
+                        <p id="contadorReceitas">
+                            Carregando...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="receitasLista">
+
+                    <p>
+                        Carregando receitas...
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= DESPESAS ================= -->
+
+            <section class="admin-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <p class="page-eyebrow">
+                            SAÍDAS
+                        </p>
+
+                        <h2>
+                            Despesas
+                        </h2>
+
+                        <p id="contadorDespesas">
+                            Carregando...
+                        </p>
+
+                    </div>
+
+
+                    <button type="button" class="btn btn-primary" id="novaDespesaBtn">
+                        + Nova despesa
+                    </button>
+
+                </div>
+
+
+                <!-- FORMULÁRIO -->
+
+                <div id="formularioContainer" style="display: none;">
+
+                    <form id="despesaForm">
+
+                        <div class="form-row">
+
+                            <div class="input-group">
+
+                                <label for="descricao">
+                                    Descrição
+                                </label>
+
+                                <input type="text" id="descricao" placeholder="Ex.: Manutenção dos vestidos" required>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label for="categoria">
+                                    Categoria
+                                </label>
+
+                                <input type="text" id="categoria" placeholder="Ex.: Manutenção" required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="input-group">
+
+                                <label for="valor">
+                                    Valor
+                                </label>
+
+                                <input type="number" id="valor" min="0.01" step="0.01" placeholder="0,00" required>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label for="data_despesa">
+                                    Data
+                                </label>
+
+                                <input type="date" id="data_despesa" required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="observacoes">
+                                Observações
+                            </label>
+
+                            <textarea id="observacoes" rows="3" placeholder="Observações sobre a despesa..."></textarea>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button type="submit" class="btn btn-primary" id="salvarDespesaBtn">
+                                Cadastrar despesa
+                            </button>
+
+                            <button type="button" class="btn" id="cancelarDespesaBtn">
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- LISTA -->
+
+                <div id="despesasLista">
+
+                    <p>
+                        Carregando despesas...
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const API_URL = "http://localhost:3000";
+
+        const token = localStorage.getItem("token");
+
+
+        /* =========================================
+           VERIFICAR LOGIN
+        ========================================= */
+
+        if (!token) {
+
+            window.location.href = "login.html";
+
+        }
+
+
+        /* =========================================
+           ELEMENTOS
+        ========================================= */
+
+        const receitaElement =
+            document.getElementById("receita");
+
+        const despesasElement =
+            document.getElementById("despesas");
+
+        const lucroElement =
+            document.getElementById("lucro");
+
+        const receitasLista =
+            document.getElementById("receitasLista");
+
+        const despesasLista =
+            document.getElementById("despesasLista");
+
+        const contadorReceitas =
+            document.getElementById("contadorReceitas");
+
+        const contadorDespesas =
+            document.getElementById("contadorDespesas");
+
+        const mensagem =
+            document.getElementById("mensagem");
+
+        const formularioContainer =
+            document.getElementById("formularioContainer");
+
+        const formulario =
+            document.getElementById("despesaForm");
+
+        const novaDespesaBtn =
+            document.getElementById("novaDespesaBtn");
+
+        const cancelarDespesaBtn =
+            document.getElementById("cancelarDespesaBtn");
+
+        const salvarDespesaBtn =
+            document.getElementById("salvarDespesaBtn");
+
+        const filtrarBtn =
+            document.getElementById("filtrarBtn");
+
+        const limparFiltroBtn =
+            document.getElementById("limparFiltroBtn");
+
+        const inicioInput =
+            document.getElementById("inicio");
+
+        const fimInput =
+            document.getElementById("fim");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+
+        let despesaEditandoId = null;
+
+
+        /* =========================================
+           LOGOUT
+        ========================================= */
+
+        logoutBtn.addEventListener("click", () => {
+
+            localStorage.removeItem("token");
+
+            window.location.href = "login.html";
+
+        });
+
+
+        /* =========================================
+           FORMATAR MOEDA
+        ========================================= */
+
+        function formatarMoeda(valor) {
+
+            return Number(valor || 0).toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           FORMATAR DATA
+        ========================================= */
+
+        function formatarData(data) {
+
+            if (!data) {
+                return "-";
+            }
+
+            return new Date(data).toLocaleDateString(
+                "pt-BR"
+            );
+
+        }
+
+
+        /* =========================================
+           VERIFICAR RESPOSTA
+        ========================================= */
+
+        async function verificarResposta(resposta) {
+
+            if (
+                resposta.status === 401 ||
+                resposta.status === 403
+            ) {
+
+                localStorage.removeItem("token");
+
+                window.location.href =
+                    "login.html";
+
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+
+        /* =========================================
+           CARREGAR RESUMO
+        ========================================= */
+
+        async function carregarResumo() {
+
+            try {
+
+                let url =
+                    `${API_URL}/financeiro/resumo`;
+
+                const inicio =
+                    inicioInput.value;
+
+                const fim =
+                    fimInput.value;
+
+
+                if (inicio && fim) {
+
+                    url +=
+                        `?inicio=${inicio}&fim=${fim}`;
+
+                }
+
+
+                const resposta =
+                    await fetch(
+                        url,
+                        {
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (!await verificarResposta(resposta)) {
+                    return;
+                }
+
+
+                const financeiro =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        financeiro.erro ||
+                        "Erro ao carregar resumo."
+                    );
+
+                }
+
+
+                receitaElement.textContent =
+                    formatarMoeda(
+                        financeiro.receita
+                    );
+
+                despesasElement.textContent =
+                    formatarMoeda(
+                        financeiro.despesas
+                    );
+
+                lucroElement.textContent =
+                    formatarMoeda(
+                        financeiro.lucro
+                    );
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro no resumo:",
+                    erro
+                );
+
+                mensagem.textContent =
+                    "Não foi possível carregar o resumo financeiro.";
+
+            }
+
+        }
+
+
+        /* =========================================
+           CARREGAR RECEITAS
+        ========================================= */
+
+        async function carregarReceitas() {
+
+            try {
+
+                let url =
+                    `${API_URL}/financeiro/receitas`;
+
+                const parametros = [];
+
+
+                if (inicioInput.value) {
+
+                    parametros.push(
+                        `inicio=${inicioInput.value}`
+                    );
+
+                }
+
+
+                if (fimInput.value) {
+
+                    parametros.push(
+                        `fim=${fimInput.value}`
+                    );
+
+                }
+
+
+                if (parametros.length > 0) {
+
+                    url +=
+                        "?" + parametros.join("&");
+
+                }
+
+
+                const resposta =
+                    await fetch(
+                        url,
+                        {
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (!await verificarResposta(resposta)) {
+                    return;
+                }
+
+
+                const receitas =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        receitas.erro ||
+                        "Erro ao carregar receitas."
+                    );
+
+                }
+
+
+                contadorReceitas.textContent =
+                    `${receitas.length} receita${receitas.length === 1 ? "" : "s"}`;
+
+
+                receitasLista.innerHTML = "";
+
+
+                if (receitas.length === 0) {
+
+                    receitasLista.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Nenhuma receita encontrada</h3>
+                        <p>
+                            Ainda não existem pagamentos registrados neste período.
+                        </p>
+                    </div>
+                `;
+
+                    return;
+
+                }
+
+
+                receitas.forEach(receita => {
+
+                    const item =
+                        document.createElement("div");
+
+                    item.className =
+                        "cliente-item";
+
+
+                    item.innerHTML = `
+
+                    <div class="cliente-info">
+
+                        <div class="cliente-avatar">
+                            R$
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                ${receita.cliente_nome}
+                            </h3>
+
+                            <p>
+                                ${receita.vestido_nome}
+                            </p>
+
+                            <p>
+                                ${receita.forma_pagamento}
+                                ${receita.parcelas > 1
+                            ? `• ${receita.parcelas}x`
+                            : ""
+                        }
+                            </p>
+
+                            <p>
+                                ${formatarData(
+                            receita.data_pagamento
+                        )}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="cliente-acoes">
+
+                        <strong>
+                            ${formatarMoeda(
+                            receita.valor
+                        )}
+                        </strong>
+
+                    </div>
+
+                `;
+
+
+                    receitasLista.appendChild(item);
+
+                });
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar receitas:",
+                    erro
+                );
+
+                receitasLista.innerHTML =
+                    "<p>Não foi possível carregar as receitas.</p>";
+
+            }
+
+        }
+
+
+        /* =========================================
+           CARREGAR DESPESAS
+        ========================================= */
+
+        async function carregarDespesas() {
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `${API_URL}/despesas`,
+                        {
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (!await verificarResposta(resposta)) {
+                    return;
+                }
+
+
+                const despesas =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        despesas.erro ||
+                        "Erro ao carregar despesas."
+                    );
+
+                }
+
+
+                let despesasFiltradas =
+                    despesas;
+
+
+                if (inicioInput.value) {
+
+                    despesasFiltradas =
+                        despesasFiltradas.filter(
+                            despesa =>
+                                despesa.data_despesa >=
+                                inicioInput.value
+                        );
+
+                }
+
+
+                if (fimInput.value) {
+
+                    despesasFiltradas =
+                        despesasFiltradas.filter(
+                            despesa =>
+                                despesa.data_despesa <=
+                                fimInput.value
+                        );
+
+                }
+
+
+                contadorDespesas.textContent =
+                    `${despesasFiltradas.length} despesa${despesasFiltradas.length === 1 ? "" : "s"}`;
+
+
+                despesasLista.innerHTML = "";
+
+
+                if (despesasFiltradas.length === 0) {
+
+                    despesasLista.innerHTML = `
+                    <div class="empty-state">
+
+                        <h3>
+                            Nenhuma despesa encontrada
+                        </h3>
+
+                        <p>
+                            Cadastre uma despesa para começar a acompanhar seus gastos.
+                        </p>
+
+                    </div>
+                `;
+
+                    return;
+
+                }
+
+
+                despesasFiltradas.forEach(despesa => {
+
+                    const item =
+                        document.createElement("div");
+
+                    item.className =
+                        "cliente-item";
+
+
+                    item.innerHTML = `
+
+                    <div class="cliente-info">
+
+                        <div class="cliente-avatar">
+                            -
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                ${despesa.descricao}
+                            </h3>
+
+                            <p>
+                                Categoria:
+                                ${despesa.categoria}
+                            </p>
+
+                            <p>
+                                ${formatarData(
+                        despesa.data_despesa
+                    )}
+                            </p>
+
+                            ${despesa.observacoes
+                            ? `
+                                        <p class="cliente-observacao">
+                                            ${despesa.observacoes}
+                                        </p>
+                                    `
+                            : ""
+                        }
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="cliente-acoes">
+
+                        <strong>
+                            ${formatarMoeda(
+                            despesa.valor
+                        )}
+                        </strong>
+
+
+                        <button
+                            type="button"
+                            class="btn"
+                            onclick="editarDespesa(${despesa.id})"
+                        >
+                            Editar
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            onclick="excluirDespesa(${despesa.id})"
+                        >
+                            Excluir
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                    despesasLista.appendChild(item);
+
+                });
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar despesas:",
+                    erro
+                );
+
+                despesasLista.innerHTML =
+                    "<p>Não foi possível carregar as despesas.</p>";
+
+            }
+
+        }
+
+
+        /* =========================================
+           NOVA DESPESA
+        ========================================= */
+
+        novaDespesaBtn.addEventListener("click", () => {
+
+            despesaEditandoId = null;
+
+            formulario.reset();
+
+            salvarDespesaBtn.textContent =
+                "Cadastrar despesa";
+
+            formularioContainer.style.display =
+                "block";
+
+            formularioContainer.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        });
+
+
+        /* =========================================
+           CANCELAR
+        ========================================= */
+
+        cancelarDespesaBtn.addEventListener("click", () => {
+
+            despesaEditandoId = null;
+
+            formulario.reset();
+
+            formularioContainer.style.display =
+                "none";
+
+        });
+
+
+        /* =========================================
+           EDITAR DESPESA
+        ========================================= */
+
+        async function editarDespesa(id) {
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `${API_URL}/despesas/${id}`,
+                        {
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (!await verificarResposta(resposta)) {
+                    return;
+                }
+
+
+                const despesa =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    alert(
+                        despesa.erro ||
+                        "Erro ao carregar despesa."
+                    );
+
+                    return;
+
+                }
+
+
+                document.getElementById("descricao").value =
+                    despesa.descricao || "";
+
+                document.getElementById("categoria").value =
+                    despesa.categoria || "";
+
+                document.getElementById("valor").value =
+                    despesa.valor || "";
+
+                document.getElementById("data_despesa").value =
+                    despesa.data_despesa
+                        ? despesa.data_despesa.substring(0, 10)
+                        : "";
+
+                document.getElementById("observacoes").value =
+                    despesa.observacoes || "";
+
+
+                despesaEditandoId =
+                    id;
+
+
+                salvarDespesaBtn.textContent =
+                    "Salvar alterações";
+
+
+                formularioContainer.style.display =
+                    "block";
+
+
+                formularioContainer.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível carregar a despesa."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           EXCLUIR DESPESA
+        ========================================= */
+
+        async function excluirDespesa(id) {
+
+            const confirmar =
+                confirm(
+                    "Tem certeza que deseja excluir esta despesa?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `${API_URL}/despesas/${id}`,
+                        {
+                            method: "DELETE",
+
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (!await verificarResposta(resposta)) {
+                    return;
+                }
+
+
+                const resultado =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    alert(
+                        resultado.erro ||
+                        "Erro ao excluir despesa."
+                    );
+
+                    return;
+
+                }
+
+
+                mensagem.textContent =
+                    "Despesa excluída com sucesso!";
+
+
+                await carregarResumo();
+
+                await carregarDespesas();
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível conectar ao servidor."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           SALVAR DESPESA
+        ========================================= */
+
+        formulario.addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+
+                const dados = {
+
+                    descricao:
+                        document.getElementById(
+                            "descricao"
+                        ).value,
+
+                    categoria:
+                        document.getElementById(
+                            "categoria"
+                        ).value,
+
+                    valor:
+                        Number(
+                            document.getElementById(
+                                "valor"
+                            ).value
+                        ),
+
+                    data_despesa:
+                        document.getElementById(
+                            "data_despesa"
+                        ).value,
+
+                    observacoes:
+                        document.getElementById(
+                            "observacoes"
+                        ).value
+
+                };
+
+
+                try {
+
+                    salvarDespesaBtn.disabled =
+                        true;
+
+                    salvarDespesaBtn.textContent =
+                        "Salvando...";
+
+
+                    let url;
+
+                    let metodo;
+
+
+                    if (despesaEditandoId) {
+
+                        url =
+                            `${API_URL}/despesas/${despesaEditandoId}`;
+
+                        metodo =
+                            "PUT";
+
+                    } else {
+
+                        url =
+                            `${API_URL}/despesas`;
+
+                        metodo =
+                            "POST";
+
+                    }
+
+
+                    const resposta =
+                        await fetch(
+                            url,
+                            {
+                                method: metodo,
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        `Bearer ${token}`
+
+                                },
+
+                                body:
+                                    JSON.stringify(dados)
+
+                            }
+                        );
+
+
+                    if (!await verificarResposta(resposta)) {
+                        return;
+                    }
+
+
+                    const resultado =
+                        await resposta.json();
+
+
+                    if (!resposta.ok) {
+
+                        mensagem.textContent =
+                            resultado.erro ||
+                            "Erro ao salvar despesa.";
+
+                        return;
+
+                    }
+
+
+                    mensagem.textContent =
+                        despesaEditandoId
+                            ? "Despesa atualizada com sucesso!"
+                            : "Despesa cadastrada com sucesso!";
+
+
+                    formulario.reset();
+
+                    despesaEditandoId =
+                        null;
+
+                    formularioContainer.style.display =
+                        "none";
+
+
+                    await carregarResumo();
+
+                    await carregarDespesas();
+
+
+                } catch (erro) {
+
+                    console.error(erro);
+
+                    mensagem.textContent =
+                        "Não foi possível conectar ao servidor.";
+
+                } finally {
+
+                    salvarDespesaBtn.disabled =
+                        false;
+
+                    salvarDespesaBtn.textContent =
+                        despesaEditandoId
+                            ? "Salvar alterações"
+                            : "Cadastrar despesa";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           FILTRAR
+        ========================================= */
+
+        filtrarBtn.addEventListener(
+            "click",
+            async () => {
+
+                if (
+                    inicioInput.value &&
+                    fimInput.value &&
+                    inicioInput.value > fimInput.value
+                ) {
+
+                    mensagem.textContent =
+                        "A data inicial não pode ser posterior à data final.";
+
+                    return;
+
+                }
+
+
+                mensagem.textContent = "";
+
+                await carregarResumo();
+
+                await carregarReceitas();
+
+                await carregarDespesas();
+
+            }
+        );
+
+
+        /* =========================================
+           LIMPAR FILTRO
+        ========================================= */
+
+        limparFiltroBtn.addEventListener(
+            "click",
+            async () => {
+
+                inicioInput.value = "";
+
+                fimInput.value = "";
+
+                mensagem.textContent = "";
+
+                await carregarResumo();
+
+                await carregarReceitas();
+
+                await carregarDespesas();
+
+            }
+        );
+
+
+        /* =========================================
+           INICIAR
+        ========================================= */
+
+        async function iniciar() {
+
+            await carregarResumo();
+
+            await carregarReceitas();
+
+            await carregarDespesas();
+
+        }
+
+
+        iniciar();
+
+    </script>
+    ```
+
+</body>
+
+</html>

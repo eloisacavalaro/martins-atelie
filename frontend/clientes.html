@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    ```
+    <title>Clientes | Maison Belle</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    ```
+
+</head>
+
+<body>
+
+    ```
+    <div class="admin-layout">
+
+        <!-- MENU LATERAL -->
+
+        <aside class="sidebar">
+
+            <a href="index.html" class="logo">
+                <span>Martins</span>
+                <strong>Atélie</strong>
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a href="admin.html">
+                    Dashboard
+                </a>
+
+                <a href="vestidos.html">
+                    Vestidos
+                </a>
+
+                <a href="clientes.html" class="active">
+                    Clientes
+                </a>
+
+                <a href="agendamentos.html">
+                    Agendamentos
+                </a>
+
+                <a href="alugueis.html">
+                    Aluguéis
+                </a>
+                <a href="pagamentos.html">
+                    Pagamentos
+                </a>
+                
+                <a href="despesas.html">
+                    Despesas
+                </a>
+
+                <a href="financeiro.html">
+                    Financeiro
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="index.html">
+                    ← Voltar para o site
+                </a>
+
+                <button id="logoutBtn">
+                    Sair
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CONTEÚDO -->
+
+        <main class="admin-content">
+
+            <header class="page-header">
+
+                <div>
+                    <p class="page-eyebrow">
+                        Administração
+                    </p>
+
+                    <h1>
+                        Clientes
+                    </h1>
+
+                    <p>
+                        Gerencie as clientes cadastradas na Maison Belle.
+                    </p>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="novoClienteBtn">
+                    + Novo cliente
+                </button>
+
+            </header>
+
+
+            <!-- MENSAGEM -->
+
+            <p id="mensagem"></p>
+
+
+            <!-- FORMULÁRIO -->
+
+            <section class="admin-card" id="formularioContainer" style="display: none;">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2 id="tituloFormulario">
+                            Novo cliente
+                        </h2>
+
+                        <p>
+                            Preencha os dados da cliente.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form id="clienteForm">
+
+                    <div class="form-row">
+
+                        <div class="input-group">
+
+                            <label for="nome">
+                                Nome
+                            </label>
+
+                            <input type="text" id="nome" placeholder="Nome completo" required>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="telefone">
+                                Telefone
+                            </label>
+
+                            <input type="text" id="telefone" placeholder="(24) 99999-9999">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input type="email" id="email" placeholder="cliente@email.com">
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="observacoes">
+                            Observações
+                        </label>
+
+                        <textarea id="observacoes" rows="4" placeholder="Observações sobre a cliente..."></textarea>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button type="submit" class="btn btn-primary" id="salvarBtn">
+                            Cadastrar cliente
+                        </button>
+
+                        <button type="button" class="btn" id="cancelarBtn">
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- LISTA DE CLIENTES -->
+
+            <section class="admin-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>
+                            Clientes cadastradas
+                        </h2>
+
+                        <p id="contadorClientes">
+                            Carregando...
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div id="clientesLista">
+
+                    <p>
+                        Carregando clientes...
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const API_URL = "http://localhost:3000";
+
+        const token = localStorage.getItem("token");
+
+        /*
+         * VERIFICAR LOGIN
+         */
+
+        if (!token) {
+            window.location.href = "login.html";
+        }
+
+
+        /*
+         * ELEMENTOS
+         */
+
+        const lista =
+            document.getElementById("clientesLista");
+
+        const contador =
+            document.getElementById("contadorClientes");
+
+        const formularioContainer =
+            document.getElementById("formularioContainer");
+
+        const formulario =
+            document.getElementById("clienteForm");
+
+        const tituloFormulario =
+            document.getElementById("tituloFormulario");
+
+        const salvarBtn =
+            document.getElementById("salvarBtn");
+
+        const mensagem =
+            document.getElementById("mensagem");
+
+        const novoClienteBtn =
+            document.getElementById("novoClienteBtn");
+
+        const cancelarBtn =
+            document.getElementById("cancelarBtn");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+
+        /*
+         * ID DA CLIENTE SENDO EDITADA
+         */
+
+        let clienteEditandoId = null;
+
+
+        /*
+         * LOGOUT
+         */
+
+        logoutBtn.addEventListener("click", () => {
+
+            localStorage.removeItem("token");
+
+            window.location.href = "login.html";
+
+        });
+
+
+        /*
+         * ABRIR FORMULÁRIO
+         */
+
+        novoClienteBtn.addEventListener("click", () => {
+
+            clienteEditandoId = null;
+
+            formulario.reset();
+
+            tituloFormulario.textContent =
+                "Novo cliente";
+
+            salvarBtn.textContent =
+                "Cadastrar cliente";
+
+            formularioContainer.style.display =
+                "block";
+
+            mensagem.textContent = "";
+
+            formularioContainer.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        });
+
+
+        /*
+         * CANCELAR
+         */
+
+        cancelarBtn.addEventListener("click", () => {
+
+            clienteEditandoId = null;
+
+            formulario.reset();
+
+            formularioContainer.style.display =
+                "none";
+
+            mensagem.textContent = "";
+
+        });
+
+
+        /*
+         * CARREGAR CLIENTES
+         */
+
+        async function carregarClientes() {
+
+            try {
+
+                const resposta = await fetch(
+                    `${API_URL}/clientes`,
+                    {
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+
+                if (resposta.status === 401 ||
+                    resposta.status === 403) {
+
+                    localStorage.removeItem("token");
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                const clientes =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    lista.innerHTML =
+                        "<p>Erro ao carregar clientes.</p>";
+
+                    return;
+                }
+
+
+                contador.textContent =
+                    `${clientes.length} cliente${clientes.length === 1 ? "" : "s"} cadastrada${clientes.length === 1 ? "" : "s"}`;
+
+
+                lista.innerHTML = "";
+
+
+                if (clientes.length === 0) {
+
+                    lista.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Nenhuma cliente cadastrada</h3>
+                        <p>
+                            Comece cadastrando sua primeira cliente.
+                        </p>
+                    </div>
+                `;
+
+                    return;
+                }
+
+
+                clientes.forEach(cliente => {
+
+                    const item =
+                        document.createElement("div");
+
+                    item.className =
+                        "cliente-item";
+
+
+                    item.innerHTML = `
+
+                    <div class="cliente-info">
+
+                        <div class="cliente-avatar">
+                            ${cliente.nome
+                            ? cliente.nome
+                                .charAt(0)
+                                .toUpperCase()
+                            : "C"
+                        }
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                ${cliente.nome}
+                            </h3>
+
+                            <p>
+                                ${cliente.telefone || "Telefone não informado"}
+                            </p>
+
+                            <p>
+                                ${cliente.email || "E-mail não informado"}
+                            </p>
+
+                            ${cliente.observacoes
+                            ? `
+                                    <p class="cliente-observacao">
+                                        ${cliente.observacoes}
+                                    </p>
+                                `
+                            : ""
+                        }
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="cliente-acoes">
+
+                        <button
+                            type="button"
+                            class="btn"
+                            onclick="editarCliente(${cliente.id})"
+                        >
+                            Editar
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            onclick="excluirCliente(${cliente.id})"
+                        >
+                            Excluir
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                    lista.appendChild(item);
+
+                });
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar clientes:",
+                    erro
+                );
+
+                lista.innerHTML =
+                    "<p>Não foi possível conectar ao servidor.</p>";
+
+            }
+
+        }
+
+
+        /*
+         * EDITAR CLIENTE
+         */
+
+        async function editarCliente(id) {
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `${API_URL}/clientes/${id}`,
+                        {
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (resposta.status === 401 ||
+                    resposta.status === 403) {
+
+                    localStorage.removeItem("token");
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                const cliente =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    alert(
+                        cliente.erro ||
+                        "Erro ao carregar cliente."
+                    );
+
+                    return;
+                }
+
+
+                /*
+                 * PREENCHER FORMULÁRIO
+                 */
+
+                document.getElementById("nome").value =
+                    cliente.nome || "";
+
+                document.getElementById("telefone").value =
+                    cliente.telefone || "";
+
+                document.getElementById("email").value =
+                    cliente.email || "";
+
+                document.getElementById("observacoes").value =
+                    cliente.observacoes || "";
+
+
+                clienteEditandoId = id;
+
+
+                tituloFormulario.textContent =
+                    "Editar cliente";
+
+                salvarBtn.textContent =
+                    "Salvar alterações";
+
+
+                formularioContainer.style.display =
+                    "block";
+
+
+                mensagem.textContent = "";
+
+
+                formularioContainer.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível carregar a cliente."
+                );
+
+            }
+
+        }
+
+
+        /*
+         * EXCLUIR CLIENTE
+         */
+
+        async function excluirCliente(id) {
+
+            const confirmar =
+                confirm(
+                    "Tem certeza que deseja excluir esta cliente?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `${API_URL}/clientes/${id}`,
+                        {
+                            method: "DELETE",
+
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (resposta.status === 401 ||
+                    resposta.status === 403) {
+
+                    localStorage.removeItem("token");
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                const resultado =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    alert(
+                        resultado.erro ||
+                        "Erro ao excluir cliente."
+                    );
+
+                    return;
+                }
+
+
+                mensagem.textContent =
+                    "Cliente excluída com sucesso!";
+
+
+                carregarClientes();
+
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível conectar ao servidor."
+                );
+
+            }
+
+        }
+
+
+        /*
+         * SALVAR CLIENTE
+         */
+
+        formulario.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                const dados = {
+
+                    nome:
+                        document.getElementById("nome").value,
+
+                    telefone:
+                        document.getElementById("telefone").value,
+
+                    email:
+                        document.getElementById("email").value,
+
+                    observacoes:
+                        document.getElementById("observacoes").value
+
+                };
+
+
+                try {
+
+                    salvarBtn.disabled = true;
+
+                    salvarBtn.textContent =
+                        "Salvando...";
+
+
+                    let url;
+
+                    let metodo;
+
+
+                    if (clienteEditandoId) {
+
+                        url =
+                            `${API_URL}/clientes/${clienteEditandoId}`;
+
+                        metodo = "PUT";
+
+                    } else {
+
+                        url =
+                            `${API_URL}/clientes`;
+
+                        metodo = "POST";
+
+                    }
+
+
+                    const resposta =
+                        await fetch(
+                            url,
+                            {
+                                method: metodo,
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Authorization":
+                                        `Bearer ${token}`
+
+                                },
+
+                                body:
+                                    JSON.stringify(dados)
+
+                            }
+                        );
+
+
+                    if (resposta.status === 401 ||
+                        resposta.status === 403) {
+
+                        localStorage.removeItem("token");
+
+                        window.location.href =
+                            "login.html";
+
+                        return;
+                    }
+
+
+                    const resultado =
+                        await resposta.json();
+
+
+                    if (!resposta.ok) {
+
+                        mensagem.textContent =
+                            resultado.erro ||
+                            "Erro ao salvar cliente.";
+
+                        return;
+                    }
+
+
+                    if (clienteEditandoId) {
+
+                        mensagem.textContent =
+                            "Cliente atualizada com sucesso!";
+
+                    } else {
+
+                        mensagem.textContent =
+                            "Cliente cadastrada com sucesso!";
+
+                    }
+
+
+                    formulario.reset();
+
+                    clienteEditandoId = null;
+
+
+                    tituloFormulario.textContent =
+                        "Novo cliente";
+
+                    salvarBtn.textContent =
+                        "Cadastrar cliente";
+
+
+                    formularioContainer.style.display =
+                        "none";
+
+
+                    carregarClientes();
+
+
+                } catch (erro) {
+
+                    console.error(erro);
+
+                    mensagem.textContent =
+                        "Não foi possível conectar ao servidor.";
+
+                } finally {
+
+                    salvarBtn.disabled = false;
+
+                    salvarBtn.textContent =
+                        clienteEditandoId
+                            ? "Salvar alterações"
+                            : "Cadastrar cliente";
+
+                }
+
+            }
+        );
+
+
+        /*
+         * INICIAR
+         */
+
+        carregarClientes();
+
+    </script>
+    ```
+
+</body>
+
+</html>

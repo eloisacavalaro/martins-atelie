@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Dashboard | Maison Belle</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    
+
+</head>
+
+<body>
+    
+    <div class="admin-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <a href="index.html" class="logo">
+                <span>Martins</span>
+                <strong>Atélie</strong>
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a href="admin.html" class="active">
+                    Dashboard
+                </a>
+
+                <a href="vestidos.html">
+                    Vestidos
+                </a>
+
+                <a href="clientes.html">
+                    Clientes
+                </a>
+
+                <a href="agendamentos.html">
+                    Agendamentos
+                </a>
+
+                <a href="alugueis.html">
+                    Aluguéis
+                </a>
+
+                <a href="pagamentos.html">
+                    Pagamentos
+                </a>
+
+                <a href="despesas.html">
+                    Despesas
+                </a>
+
+                <a href="financeiro.html">
+                    Financeiro
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="index.html">
+                    ← Voltar para o site
+                </a>
+
+                <button id="logoutBtn">
+                    Sair
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= CONTEÚDO ================= -->
+
+        <main class="admin-content">
+
+            <header class="admin-header">
+
+                <div>
+                    <p class="eyebrow">
+                        MAISON BELLE
+                    </p>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                    <p>
+                        Visão geral da sua loja.
+                    </p>
+                </div>
+
+            </header>
+
+
+            <!-- ================= CARDS ================= -->
+
+            <section class="dashboard-cards">
+
+                <div class="dashboard-card">
+
+                    <span>
+                        Vestidos cadastrados
+                    </span>
+
+                    <strong id="totalVestidos">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <span>
+                        Clientes
+                    </span>
+
+                    <strong id="totalClientes">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <span>
+                        Agendamentos
+                    </span>
+
+                    <strong id="totalAgendamentos">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <span>
+                        Aluguéis
+                    </span>
+
+                    <strong id="totalAlugueis">
+                        —
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FINANCEIRO ================= -->
+
+            <section class="dashboard-section">
+
+                <div class="section-title">
+
+                    <div>
+                        <p class="eyebrow">
+                            FINANCEIRO
+                        </p>
+
+                        <h2>
+                            Resumo
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="finance-cards">
+
+                    <div class="finance-card">
+
+                        <span>
+                            Receita
+                        </span>
+
+                        <strong id="receita">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="finance-card">
+
+                        <span>
+                            Despesas
+                        </span>
+
+                        <strong id="despesas">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="finance-card">
+
+                        <span>
+                            Lucro
+                        </span>
+
+                        <strong id="lucro">
+                            R$ 0,00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= AÇÕES ================= -->
+
+            <section class="dashboard-section">
+
+                <div class="section-title">
+
+                    <div>
+                        <p class="eyebrow">
+                            GERENCIAMENTO
+                        </p>
+
+                        <h2>
+                            Acesso rápido
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <a href="vestidos.html" class="quick-action">
+
+                        <strong>
+                            Vestidos
+                        </strong>
+
+                        <span>
+                            Cadastrar, editar ou excluir vestidos
+                        </span>
+
+                    </a>
+
+
+                    <a href="clientes.html" class="quick-action">
+
+                        <strong>
+                            Clientes
+                        </strong>
+
+                        <span>
+                            Gerenciar clientes
+                        </span>
+
+                    </a>
+
+
+                    <a href="agendamentos.html" class="quick-action">
+
+                        <strong>
+                            Agendamentos
+                        </strong>
+
+                        <span>
+                            Ver os próximos atendimentos
+                        </span>
+
+                    </a>
+
+
+                    <a href="alugueis.html" class="quick-action">
+
+                        <strong>
+                            Aluguéis
+                        </strong>
+
+                        <span>
+                            Gerenciar os aluguéis
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MENSAGEM ================= -->
+
+            <p id="dashboardMensagem"></p>
+
+        </main>
+
+    </div>
+
+
+    <script>
+        
+
+        const API_URL = "http://localhost:3000";
+
+        const token = localStorage.getItem("token");
+
+
+        /* =========================================
+           VERIFICAR LOGIN
+        ========================================= */
+
+        if (!token) {
+
+            window.location.href = "login.html";
+
+        }
+
+
+        /* =========================================
+           LOGOUT
+        ========================================= */
+
+        document
+            .getElementById("logoutBtn")
+            .addEventListener("click", () => {
+
+                localStorage.removeItem("token");
+
+                window.location.href = "login.html";
+
+            });
+
+
+        /* =========================================
+           FUNÇÃO PARA BUSCAR API
+        ========================================= */
+
+        async function buscar(endpoint) {
+
+            const resposta = await fetch(
+                `${API_URL}${endpoint}`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            );
+
+         if (resposta.status === 401 || resposta.status === 403) {
+
+                localStorage.removeItem("token");
+
+                window.location.href = "login.html";
+
+                return null;
+            }
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    `Erro ao acessar ${endpoint}`
+                );
+
+            }
+
+            return await resposta.json();
+        }
+
+
+        /* =========================================
+           CARREGAR DASHBOARD
+        ========================================= */
+
+        async function carregarDashboard() {
+
+            try {
+
+                const vestidos =
+                    await buscar("/vestidos");
+
+                const clientes =
+                    await buscar("/clientes");
+
+                const agendamentos =
+                    await buscar("/agendamentos");
+
+                const alugueis =
+                    await buscar("/alugueis");
+
+                const financeiro =
+                    await buscar("/financeiro/resumo");
+
+
+                /* ===============================
+                   QUANTIDADES
+                =============================== */
+
+                document.getElementById(
+                    "totalVestidos"
+                ).textContent =
+                    vestidos.length;
+
+
+                document.getElementById(
+                    "totalClientes"
+                ).textContent =
+                    clientes.length;
+
+
+                document.getElementById(
+                    "totalAgendamentos"
+                ).textContent =
+                    agendamentos.length;
+
+
+                document.getElementById(
+                    "totalAlugueis"
+                ).textContent =
+                    alugueis.length;
+
+
+                /* ===============================
+                   FINANCEIRO
+                =============================== */
+
+                document.getElementById(
+                    "receita"
+                ).textContent =
+                    formatarMoeda(financeiro.receita);
+
+
+                document.getElementById(
+                    "despesas"
+                ).textContent =
+                    formatarMoeda(financeiro.despesas);
+
+
+                document.getElementById(
+                    "lucro"
+                ).textContent =
+                    formatarMoeda(financeiro.lucro);
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar dashboard:",
+                    erro
+                );
+
+                document.getElementById(
+                    "dashboardMensagem"
+                ).textContent =
+                    "Não foi possível carregar os dados do dashboard.";
+
+            }
+
+        }
+
+
+        /* =========================================
+           FORMATAR DINHEIRO
+        ========================================= */
+
+        function formatarMoeda(valor) {
+
+            return Number(valor).toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           INICIAR
+        ========================================= */
+
+        carregarDashboard();
+
+    </script>
+
+
+</body>
+
+</html>

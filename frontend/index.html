@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    ```
+    <title>Martins Atélie | Aluguel de Vestidos e Trajes</title>
+
+    <meta name="description" content="Aluguel de vestidos de noiva, debutantes, daminhas, ternos e acessórios.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+
+        <div class="container nav">
+
+            <a href="#inicio" class="logo">
+                <span>Martins</span>
+                <strong>Atélie</strong>
+            </a>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <nav id="navMenu">
+
+                <a href="#inicio">Início</a>
+
+                <a href="#colecao">Coleções</a>
+
+                <a href="#sobre">O Atélie</a>
+
+                <a href="#como-funciona">Como funciona</a>
+
+                <a href="#agendamento" class="nav-agendar">
+                    Agendar atendimento
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-overlay"></div>
+
+            <div class="container hero-content">
+
+                <p class="eyebrow">
+                    ELEGÂNCIA PARA MOMENTOS INESQUECÍVEIS
+                </p>
+
+                <h1>
+                    O vestido perfeito
+                    <br>
+                    para o seu grande dia.
+                </h1>
+
+                <p class="hero-text">
+                    Vestidos de noiva, debutantes e daminhas,
+                    além de ternos e acessórios para você
+                    celebrar cada momento com elegância.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#colecao" class="btn btn-primary">
+                        Ver coleção
+                    </a>
+
+                    <a href="#agendamento" class="btn btn-outline">
+                        Agendar visita
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="hero-scroll">
+                <span>Explore</span>
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORIAS ================= -->
+
+        <section class="categories">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <p class="eyebrow">
+                        ENCONTRE O SEU ESTILO
+                    </p>
+
+                    <h2>
+                        Nossas coleções
+                    </h2>
+
+                    <p>
+                        Peças selecionadas para diferentes
+                        momentos e celebrações.
+                    </p>
+
+                </div>
+
+                <div class="category-grid">
+
+                    <button class="category-card" data-category="noiva">
+
+                        <div class="category-icon">
+                            <i class="fa-solid fa-ring"></i>
+                        </div>
+
+                        <h3>Noivas</h3>
+
+                        <span>
+                            Elegância para o seu grande dia
+                        </span>
+
+                    </button>
+
+
+                    <button class="category-card" data-category="debutante">
+
+                        <div class="category-icon">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+
+                        <h3>Debutantes</h3>
+
+                        <span>
+                            Para uma noite inesquecível
+                        </span>
+
+                    </button>
+
+
+                    <button class="category-card" data-category="daminha">
+
+                        <div class="category-icon">
+                            <i class="fa-solid fa-child-dress"></i>
+                        </div>
+
+                        <h3>Daminhas</h3>
+
+                        <span>
+                            Delicadeza em cada detalhe
+                        </span>
+
+                    </button>
+
+
+                    <button class="category-card" data-category="terno">
+
+                        <div class="category-icon">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+
+                        <h3>Ternos</h3>
+
+                        <span>
+                            Sofisticação para eles
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= COLEÇÃO ================= -->
+
+        <section class="collection" id="colecao">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <p class="eyebrow">
+                        NOSSA VITRINE
+                    </p>
+
+                    <h2>
+                        Peças em destaque
+                    </h2>
+
+                    <p>
+                        Conheça alguns dos modelos disponíveis
+                        em nossa loja.
+                    </p>
+
+                </div>
+
+
+                <!-- FILTROS -->
+
+                <div class="filters">
+
+                    <button class="filter active" data-filter="todos">
+                        Todos
+                    </button>
+
+                    <button class="filter" data-filter="noiva">
+                        Noivas
+                    </button>
+
+                    <button class="filter" data-filter="debutante">
+                        Debutantes
+                    </button>
+
+                    <button class="filter" data-filter="daminha">
+                        Daminhas
+                    </button>
+
+                    <button class="filter" data-filter="terno">
+                        Ternos
+                    </button>
+
+                    <button class="filter" data-filter="acessorio">
+                        Acessórios
+                    </button>
+
+                </div>
+
+
+                <!-- PRODUTOS REAIS DO BANCO -->
+
+                <div class="products-grid" id="productsGrid">
+
+                    <p>
+                        Carregando vestidos...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SOBRE ================= -->
+
+        <section class="about" id="sobre">
+
+            <div class="container about-grid">
+
+                <div class="about-image">
+
+                    <img src="https://images.unsplash.com/photo-1550639525-c97d455acf70?auto=format&fit=crop&w=1000&q=85"
+                        alt="Interior de uma loja de vestidos">
+
+                </div>
+
+
+                <div class="about-content">
+
+                    <p class="eyebrow">
+                        SOBRE O ATÉLIE
+                    </p>
+
+                    <h2>
+                        Mais do que um vestido.
+                        <br>
+                        Uma experiência.
+                    </h2>
+
+                    <p>
+                        Na Martins Atélie, acreditamos que cada
+                        celebração merece ser especial.
+                    </p>
+
+                    <p>
+                        Por isso, oferecemos uma seleção de
+                        vestidos e trajes cuidadosamente escolhidos,
+                        além de um atendimento personalizado para
+                        ajudar você a encontrar o modelo perfeito.
+                    </p>
+
+
+                    <div class="about-features">
+
+                        <div>
+                            <i class="fa-solid fa-heart"></i>
+
+                            <span>
+                                Atendimento personalizado
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-sparkles"></i>
+
+                            <span>
+                                Modelos selecionados
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-scissors"></i>
+
+                            <span>
+                                Ajustes e cuidados
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= COMO FUNCIONA ================= -->
+
+        <section class="how" id="como-funciona">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <p class="eyebrow">
+                        SIMPLES E ESPECIAL
+                    </p>
+
+                    <h2>
+                        Como funciona?
+                    </h2>
+
+                </div>
+
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            01
+                        </div>
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        <h3>
+                            Agende sua visita
+                        </h3>
+
+                        <p>
+                            Escolha o melhor dia e horário
+                            para conhecer nossos modelos.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+                        <i class="fa-solid fa-person-dress"></i>
+
+                        <h3>
+                            Experimente
+                        </h3>
+
+                        <p>
+                            Nossa equipe ajudará você a
+                            encontrar o modelo ideal.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+                        <i class="fa-solid fa-heart"></i>
+
+                        <h3>
+                            Escolha seu favorito
+                        </h3>
+
+                        <p>
+                            Defina o traje que fará parte
+                            do seu momento especial.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            04
+                        </div>
+
+                        <i class="fa-solid fa-champagne-glasses"></i>
+
+                        <h3>
+                            Viva o momento
+                        </h3>
+
+                        <p>
+                            Aproveite seu evento com
+                            confiança e elegância.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= AGENDAMENTO ================= -->
+
+        <section class="appointment" id="agendamento">
+        
+    
+            <div class="container appointment-grid">
+        
+                <div class="appointment-info">
+        
+                    <p class="eyebrow">
+                        VENHA NOS VISITAR
+                    </p>
+        
+                    <h2>
+                        Vamos encontrar
+                        <br>
+                        o seu modelo ideal?
+                    </h2>
+        
+                    <p>
+                        Entre em contato conosco pelo WhatsApp,
+                        conte o que você está procurando e
+                        combine o melhor horário para sua visita.
+                    </p>
+        
+                    <div class="contact-info">
+        
+                        <div>
+        
+                            <i class="fa-solid fa-location-dot"></i>
+        
+                            <div>
+        
+                                <strong>
+                                    Nossa loja
+                                </strong>
+        
+                                <span>
+                                    Rua das Flores, 250
+                                    <br>
+                                    Centro — Sua Cidade
+                                </span>
+        
+                            </div>
+        
+                        </div>
+        
+                        <div>
+        
+                            <i class="fa-solid fa-phone"></i>
+        
+                            <div>
+        
+                                <strong>
+                                    WhatsApp
+                                </strong>
+        
+                                <span>
+                                    (24) 99999-9999
+                                </span>
+        
+                            </div>
+        
+                        </div>
+        
+                        <div>
+        
+                            <i class="fa-solid fa-clock"></i>
+        
+                            <div>
+        
+                                <strong>
+                                    Horário
+                                </strong>
+        
+                                <span>
+                                    Segunda a sábado
+                                    <br>
+                                    09h às 18h
+                                </span>
+        
+                            </div>
+        
+                        </div>
+        
+                    </div>
+        
+                    <a href="https://wa.me/5524999999999?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento%20na%20Maison%20Belle."
+                        target="_blank" rel="noopener noreferrer" class="whatsapp-button">
+        
+                        <i class="fa-brands fa-whatsapp"></i>
+        
+                        Agendar pelo WhatsApp
+        
+                    </a>
+        
+                </div>
+        
+        
+                <div class="appointment-form">
+        
+                    <div class="appointment-card">
+        
+                        <div class="modal-icon">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+        
+                        <p class="eyebrow">
+                            ATENDIMENTO PERSONALIZADO
+                        </p>
+        
+                        <h3>
+                            Vamos conversar?
+                        </h3>
+        
+                        <p>
+                            Fale diretamente com nossa equipe pelo
+                            WhatsApp para consultar horários,
+                            modelos e tirar suas dúvidas.
+                        </p>
+        
+                        <a href="https://wa.me/5524999999999?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento%20na%20Maison%20Belle."
+                            target="_blank" rel="noopener noreferrer" class="btn btn-primary form-button">
+        
+                            <i class="fa-brands fa-whatsapp"></i>
+        
+                            Falar pelo WhatsApp
+        
+                        </a>
+        
+                        <small>
+                            O horário da visita será combinado diretamente
+                            com nossa equipe.
+                        </small>
+        
+                    </div>
+        
+                </div>
+        
+            </div>
+            
+        
+        </section>
+
+
+
+    </main>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="container footer-grid">
+
+        <!-- MARCA -->
+
+        <div class="footer-brand">
+
+            <a href="#inicio" class="logo footer-logo">
+                <span>Martins</span>
+                <strong>Atélie</strong>
+            </a>
+
+            <p>
+                Elegância para os momentos
+                que merecem ser inesquecíveis.
+            </p>
+
+            <div class="socials">
+
+                <a href="#" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a href="#" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <a href="https://wa.me/5524999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVEGAÇÃO -->
+
+        <div class="footer-column">
+
+            <h4>
+                Navegação
+            </h4>
+
+            <a href="#inicio">
+                Início
+            </a>
+
+            <a href="#colecao">
+                Coleções
+            </a>
+
+            <a href="#sobre">
+                O Ateliê
+            </a>
+
+            <a href="#como-funciona">
+                Como funciona
+            </a>
+
+            <a href="#agendamento">
+                Agendamento
+            </a>
+
+        </div>
+
+
+        <!-- COLEÇÕES -->
+
+        <div class="footer-column">
+
+            <h4>
+                Coleções
+            </h4>
+
+            <a href="#colecao" data-category-link="noiva">
+                Noivas
+            </a>
+
+            <a href="#colecao" data-category-link="debutante">
+                Debutantes
+            </a>
+
+            <a href="#colecao" data-category-link="daminha">
+                Daminhas
+            </a>
+
+            <a href="#colecao" data-category-link="terno">
+                Ternos
+            </a>
+
+            <a href="#colecao" data-category-link="acessorio">
+                Acessórios
+            </a>
+
+        </div>
+
+
+        <!-- CONTATO -->
+
+        <div class="footer-column footer-contact">
+
+            <h4>
+                Contato
+            </h4>
+
+            <div class="footer-contact-item">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <span>
+                    Rua das Flores, 250
+                    <br>
+                    Centro — Sua Cidade
+                </span>
+
+            </div>
+
+
+            <div class="footer-contact-item">
+
+                <i class="fa-solid fa-phone"></i>
+
+                <span>
+                    (24) 99999-9999
+                </span>
+
+            </div>
+
+
+            <div class="footer-contact-item">
+
+                <i class="fa-regular fa-envelope"></i>
+
+                <span>
+                    contato@martinsatelie.com
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LINHA INFERIOR -->
+
+    <div class="footer-bottom">
+
+        <div class="container footer-bottom-content">
+
+            <span>
+                © 2026 Martins Atélie.
+                Todos os direitos reservados.
+            </span>
+
+            <a href="login.html" class="admin-link">
+                <i class="fa-solid fa-lock"></i>
+                Área administrativa
+            </a>
+
+            <span class="footer-credit">
+                Feito com <i class="fa-solid fa-heart"></i>
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+    <!-- ================= MODAL ================= -->
+
+    <div class="modal" id="productModal">
+
+        <div class="modal-content">
+
+            <button class="modal-close" id="modalClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+
+            <div class="modal-icon">
+                <i class="fa-solid fa-sparkles"></i>
+            </div>
+
+
+            <span id="modalCategory">
+                NOIVA
+            </span>
+
+            <h2 id="modalName">
+                Vestido Aurora
+            </h2>
+
+            <p id="modalDescription">
+                Descrição do vestido.
+            </p>
+
+
+            <a href="#agendamento" class="btn btn-primary" id="modalSchedule">
+                Quero experimentar
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ================= TOPO ================= -->
+
+    <button class="back-top" id="backTop" aria-label="Voltar ao topo">
+
+    
+        <i class="fa-solid fa-arrow-up"></i>
+
+
+    </button>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
