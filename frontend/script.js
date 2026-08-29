@@ -225,49 +225,41 @@ async function carregarVestidos() {
 
         vestidos.forEach((vestido) => {
             const card = document.createElement("article");
+            const productImage = document.createElement("div");
+            const image = document.createElement("img");
+            const tag = document.createElement("span");
+            const button = document.createElement("button");
+            const productInfo = document.createElement("div");
+            const category = document.createElement("span");
+            const name = document.createElement("h3");
+            const description = document.createElement("p");
 
             card.className = "product-card";
             card.dataset.category = vestido.categoria;
 
-            card.innerHTML = `
-                <div class="product-image">
+            productImage.className = "product-image";
+            image.src = vestido.imagem_url || "https://via.placeholder.com/900x1200";
+            image.alt = vestido.nome;
 
-                    <img
-                        src="${vestido.imagem_url || "https://via.placeholder.com/900x1200"}"
-                        alt="${vestido.nome}"
-                    >
+            tag.className = "product-tag";
+            tag.textContent = vestido.categoria;
 
-                    <span class="product-tag">
-                        ${vestido.categoria}
-                    </span>
+            button.type = "button";
+            button.className = "view-product";
+            button.dataset.name = vestido.nome;
+            button.dataset.category = vestido.categoria;
+            button.dataset.description = vestido.descricao || "";
+            button.textContent = "Ver detalhes";
 
-                    <button
-                        class="view-product"
-                        data-name="${vestido.nome}"
-                        data-category="${vestido.categoria}"
-                        data-description="${vestido.descricao || ""}"
-                    >
-                        Ver detalhes
-                    </button>
+            productImage.append(image, tag, button);
 
-                </div>
+            productInfo.className = "product-info";
+            category.textContent = vestido.categoria.toUpperCase();
+            name.textContent = vestido.nome;
+            description.textContent = vestido.descricao || "";
+            productInfo.append(category, name, description);
 
-                <div class="product-info">
-
-                    <span>
-                        ${vestido.categoria.toUpperCase()}
-                    </span>
-
-                    <h3>
-                        ${vestido.nome}
-                    </h3>
-
-                    <p>
-                        ${vestido.descricao || ""}
-                    </p>
-
-                </div>
-            `;
+            card.append(productImage, productInfo);
 
             productsGrid.appendChild(card);
         });
@@ -278,6 +270,15 @@ async function carregarVestidos() {
 
     } catch (erro) {
         console.error("Erro ao carregar vestidos:", erro);
+
+        const productsGrid = document.getElementById("productsGrid");
+        productsGrid.innerHTML = "";
+
+        const message = document.createElement("p");
+        message.className = "products-error";
+        message.textContent = "Não foi possível carregar os vestidos. Tente novamente mais tarde.";
+
+        productsGrid.appendChild(message);
     }
 }
 

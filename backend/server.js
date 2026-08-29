@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const pool = require("./db");
 const Joi = require("joi");
@@ -6,7 +8,6 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 const app = express();
 
@@ -224,7 +225,7 @@ app.get("/vestidos/:id", async (req, res, next) => {
     }
 });
 
-app.put("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
+app.put("/vestidos/:id", autenticar, apenasAdmin, async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -236,6 +237,15 @@ app.put("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
                 });
             }
 
+        const { error: erroDados, value } = vestidoSchema.validate(req.body);
+
+        if (erroDados) {
+            return res.status(400).json({
+                erro: "Dados inválidos",
+                detalhes: erroDados.details.map((detalhe) => detalhe.message)
+            });
+        }
+
         const {
             nome,
             categoria,
@@ -246,7 +256,7 @@ app.put("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
             confeccionado,
             imagem_url,
             disponivel
-        } = req.body;
+        } = value;
 
        const resultado = await pool.query(
             `UPDATE vestidos
@@ -346,7 +356,7 @@ app.post("/vestidos",autenticar, apenasAdmin, async (req, res, next) => {
     }
 });
 
-app.post("/agendamentos",async (req, res, next) => {
+app.post("/agendamentos", autenticar, apenasAdmin, async (req, res, next) => {
     try {
         const { error, value } = agendamentoSchema.validate(req.body);
 
@@ -1083,6 +1093,12 @@ app.put("/alugueis/:id", autenticar, apenasAdmin, async (req, res, next) => {
 
         const { error: erroId } = idSchema.validate(id);
 
+        if (erroId) {
+            return res.status(400).json({
+                erro: "ID inválido"
+            });
+        }
+
         const aluguelAtual = await pool.query(
             `SELECT vestido_id
             FROM alugueis
@@ -1097,12 +1113,6 @@ app.put("/alugueis/:id", autenticar, apenasAdmin, async (req, res, next) => {
         }
 
         const vestidoAntigo = aluguelAtual.rows[0].vestido_id;
-
-        if (erroId) {
-            return res.status(400).json({
-                erro: "ID inválido"
-            });
-        }
 
         const { error, value } = aluguelSchema.validate(req.body);
 
