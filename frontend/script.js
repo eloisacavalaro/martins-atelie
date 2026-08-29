@@ -215,7 +215,7 @@ products.forEach((product) => {
 });*/
 async function carregarVestidos() {
     try {
-        const resposta = await fetch("http://localhost:3000/vestidos");
+        const resposta = await fetch("https://martins-atelie-api.onrender.com/vestidos");
 
         const vestidos = await resposta.json();
 
