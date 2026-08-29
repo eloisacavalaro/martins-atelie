@@ -431,9 +431,13 @@ app.delete("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
 });
 app.post("/login", limiteLogin, async (req, res, next) => {
     try {
+        console.log("1 - LOGIN RECEBIDO");
+
         const { error, value } = loginSchema.validate(req.body);
 
         if (error) {
+            console.log("2 - ERRO NA VALIDAÇÃO");
+
             return res.status(400).json({
                 erro: "Dados de login inválidos"
             });
@@ -441,10 +445,15 @@ app.post("/login", limiteLogin, async (req, res, next) => {
 
         const { email, senha } = value;
 
+        console.log("3 - EMAIL RECEBIDO:", email);
+
         const resultado = await pool.query(
             "SELECT * FROM usuarios WHERE email = $1",
             [email]
         );
+
+        console.log("4 - CONSULTA AO BANCO TERMINOU");
+        console.log("5 - USUÁRIOS ENCONTRADOS:", resultado.rows.length);
 
         if (resultado.rows.length === 0) {
             return res.status(401).json({
@@ -454,16 +463,22 @@ app.post("/login", limiteLogin, async (req, res, next) => {
 
         const usuario = resultado.rows[0];
 
+        console.log("6 - USUÁRIO ENCONTRADO");
+
         const senhaCorreta = await bcrypt.compare(
             senha,
             usuario.senha
         );
+
+        console.log("7 - SENHA COMPARADA:", senhaCorreta);
 
         if (!senhaCorreta) {
             return res.status(401).json({
                 erro: "Email ou senha inválidos"
             });
         }
+
+        console.log("8 - GERANDO TOKEN");
 
         const token = jwt.sign(
             {
@@ -476,16 +491,18 @@ app.post("/login", limiteLogin, async (req, res, next) => {
             }
         );
 
+        console.log("9 - LOGIN OK");
+
         res.json({
             mensagem: "Login realizado com sucesso",
             token
         });
 
     } catch (erro) {
+        console.error("ERRO NO LOGIN:", erro);
         next(erro);
     }
 });
-
 app.post("/clientes", autenticar, apenasAdmin, async (req, res, next) => {
     try {
         const { error, value } = clienteSchema.validate(req.body);
