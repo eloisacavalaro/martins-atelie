@@ -46,7 +46,7 @@
 
         <nav class="sidebar-nav">
 
-            <a href="dashboard.html">
+                <a href="admin.html">
                 Dashboard
             </a>
 
@@ -393,7 +393,22 @@
        CONFIGURAÇÃO
     ========================================= */
 
-    const API_URL = "https://martins-atelie-api.onrender.com";
+        const API_URL = "https://martins-atelie-api.onrender.com";
+
+        function escaparDadosParaHTML(dados) {
+            return Object.fromEntries(
+                Object.entries(dados).map(([chave, valor]) => [
+                    chave,
+                    typeof valor === "string"
+                        ? valor.replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;")
+                        : valor
+                ])
+            );
+        }
 
     const token = localStorage.getItem("token");
 
@@ -797,9 +812,11 @@
 
 
 
-            pagamentos.forEach(pagamento => {
+                pagamentos.forEach(pagamento => {
 
-                const item =
+                    pagamento = escaparDadosParaHTML(pagamento);
+
+                    const item =
                     document.createElement("div");
 
 

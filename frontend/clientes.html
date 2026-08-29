@@ -238,6 +238,21 @@
 
         const API_URL = "https://martins-atelie-api.onrender.com";
 
+        function escaparDadosParaHTML(dados) {
+            return Object.fromEntries(
+                Object.entries(dados).map(([chave, valor]) => [
+                    chave,
+                    typeof valor === "string"
+                        ? valor.replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;")
+                        : valor
+                ])
+            );
+        }
+
         const token = localStorage.getItem("token");
 
         /*
@@ -417,6 +432,8 @@
 
 
                 clientes.forEach(cliente => {
+
+                    cliente = escaparDadosParaHTML(cliente);
 
                     const item =
                         document.createElement("div");

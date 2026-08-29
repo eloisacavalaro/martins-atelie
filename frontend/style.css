@@ -484,6 +484,23 @@ nav a:hover {
     transition: 0.4s;
 }
 
+.products-error {
+    grid-column: 1 / -1;
+
+    margin: 20px 0;
+    padding: 18px;
+
+    border: 1px solid rgba(163, 79, 93, 0.25);
+    border-radius: 8px;
+
+    background: #fff7f8;
+    color: #a34f5d;
+
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.85rem;
+}
+
 .product-card:hover {
     transform: translateY(-6px);
 }
