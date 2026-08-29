@@ -9,6 +9,15 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const app = express();
+
+const corsOptions = {
+    origin: "https://martins-atelie.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
+app.use(helmet());
 app.use(express.json());
 
 const vestidoSchema = Joi.object({
@@ -82,13 +91,6 @@ const idSchema = Joi.number().integer().positive().required();
 
 const PORT = process.env.PORT || 3000;
 
-
-const corsOptions = {
-    origin: "https://martins-atelie.onrender.com"
-};
-
-app.use(cors(corsOptions));
-app.use(helmet());
 
 const limiteGeral = rateLimit({
     windowMs: 15 * 60 * 1000,
