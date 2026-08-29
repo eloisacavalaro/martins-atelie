@@ -84,7 +84,7 @@ const PORT = process.env.PORT || 3000;
 
 
 const corsOptions = {
-    origin: "http://127.0.0.1:5500"
+    origin: "https://martins-atelie-api.onrender.com"
 };
 
 app.use(cors(corsOptions));
