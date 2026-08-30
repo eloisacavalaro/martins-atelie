@@ -565,6 +565,48 @@ app.post("/login", limiteLogin, async (req, res, next) => {
         next(erro);
     }
 });
+
+async function processarFalhaLogin(email, ip) {
+    // 1. Registra a tentativa atual
+    await registrarTentativaLogin(email, false, ip);
+
+    // 2. Consulta filtrando por EMAIL e IP
+    const tentativas = await pool.query(
+        `SELECT COUNT(*) AS quantidade
+         FROM tentativas_login
+         WHERE email = $1
+           AND ip = $2
+           AND sucesso = false
+           AND criado_em >= NOW() - INTERVAL '15 minutes'`,
+        [email, ip]
+    );
+
+    const quantidade = Number(tentativas.rows[0].quantidade);
+    console.log(`[TENTATIVAS] Email: ${email} | IP: ${ip} | Total: ${quantidade}`);
+
+    // 3. Dispara o e-mail e reseta o contador
+    if (quantidade >= 5) {
+        console.log("--> 5 TENTATIVAS ATINGIDAS PARA ESTE IP E E-MAIL. ENVIANDO ALERTA...");
+        await enviarAlertaLogin(email, ip, quantidade);
+
+        // Reseta o histórico desse IP + Email para evitar spam de e-mails
+        await pool.query(
+            `DELETE FROM tentativas_login 
+             WHERE email = $1 
+               AND ip = $2 
+               AND sucesso = false`,
+            [email, ip]
+        );
+    }
+}
+// Login correto
+await registrarTentativaLogin(email, true, ip);
+
+// Limpa histórico de falhas do usuário + IP para resetar a contagem
+await pool.query(
+    `DELETE FROM tentativas_login WHERE email = $1 AND ip = $2 AND sucesso = false`,
+    [email, ip]
+);
 app.post("/clientes", autenticar, apenasAdmin, async (req, res, next) => {
     try {
         const { error, value } = clienteSchema.validate(req.body);
