@@ -449,7 +449,12 @@ app.delete("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
         next(erro);
     }
 });
-
+async function registrarTentativaLogin(email, sucesso, ip) {
+    await pool.query(
+        `INSERT INTO tentativas_login (email, sucesso, ip) VALUES ($1, $2, $3)`,
+        [email, sucesso, ip]
+    );
+}
 
 async function enviarAlertaLogin(email, ip, quantidade) {
     console.log("--> Tentando enviar alerta via Resend...");
