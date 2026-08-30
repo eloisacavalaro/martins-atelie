@@ -484,25 +484,38 @@ async function enviarAlertaLogin(email, ip, quantidade) {
     }
 }
 
-// Helper interno para processar falhas de login
+// Helper interno para processar falhas de login (filtrando por EMAIL + IP)
 async function processarFalhaLogin(email, ip) {
+    // 1. Registra a tentativa falha
     await registrarTentativaLogin(email, false, ip);
 
+    // 2. Consulta filtrando por EMAIL e IP nos últimos 15 minutos
     const tentativas = await pool.query(
         `SELECT COUNT(*) AS quantidade
          FROM tentativas_login
          WHERE email = $1
-         AND sucesso = false
-         AND criado_em >= NOW() - INTERVAL '15 minutes'`,
-        [email]
+           AND ip = $2
+           AND sucesso = false
+           AND criado_em >= NOW() - INTERVAL '15 minutes'`,
+        [email, ip]
     );
 
     const quantidade = Number(tentativas.rows[0].quantidade);
-    console.log("QUANTIDADE DE TENTATIVAS:", quantidade);
+    console.log(`[TENTATIVAS] Email: ${email} | IP: ${ip} | Total: ${quantidade}`);
 
+    // 3. Se atingiu 5 tentativas, envia o e-mail e limpa o contador desse IP/Email
     if (quantidade >= 5) {
-        console.log("5 OU MAIS TENTATIVAS ATINGIDAS - ENVIANDO EMAIL");
+        console.log("--> 5 TENTATIVAS ATINGIDAS PARA ESTE IP E E-MAIL. ENVIANDO ALERTA...");
         await enviarAlertaLogin(email, ip, quantidade);
+
+        // Reseta o histórico para não enviar spam de e-mails em tentativas subsequentes
+        await pool.query(
+            `DELETE FROM tentativas_login 
+             WHERE email = $1 
+               AND ip = $2 
+               AND sucesso = false`,
+            [email, ip]
+        );
     }
 }
 
@@ -525,7 +538,7 @@ app.post("/login", limiteLogin, async (req, res, next) => {
             [email]
         );
 
-        // Email não encontrado
+        // 1. Email não encontrado
         if (resultado.rows.length === 0) {
             await processarFalhaLogin(email, ip);
             return res.status(401).json({ erro: "Email ou senha inválidos" });
@@ -535,14 +548,20 @@ app.post("/login", limiteLogin, async (req, res, next) => {
 
         const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
-        // Senha incorreta
+        // 2. Senha incorreta
         if (!senhaCorreta) {
             await processarFalhaLogin(email, ip);
             return res.status(401).json({ erro: "Email ou senha inválidos" });
         }
 
-        // Login correto
+        // 3. Login correto
         await registrarTentativaLogin(email, true, ip);
+
+        // Limpa histórico de falhas antigas deste usuário + IP
+        await pool.query(
+            `DELETE FROM tentativas_login WHERE email = $1 AND ip = $2 AND sucesso = false`,
+            [email, ip]
+        );
 
         const token = jwt.sign(
             {
@@ -566,47 +585,7 @@ app.post("/login", limiteLogin, async (req, res, next) => {
     }
 });
 
-async function processarFalhaLogin(email, ip) {
-    // 1. Registra a tentativa atual
-    await registrarTentativaLogin(email, false, ip);
 
-    // 2. Consulta filtrando por EMAIL e IP
-    const tentativas = await pool.query(
-        `SELECT COUNT(*) AS quantidade
-         FROM tentativas_login
-         WHERE email = $1
-           AND ip = $2
-           AND sucesso = false
-           AND criado_em >= NOW() - INTERVAL '15 minutes'`,
-        [email, ip]
-    );
-
-    const quantidade = Number(tentativas.rows[0].quantidade);
-    console.log(`[TENTATIVAS] Email: ${email} | IP: ${ip} | Total: ${quantidade}`);
-
-    // 3. Dispara o e-mail e reseta o contador
-    if (quantidade >= 5) {
-        console.log("--> 5 TENTATIVAS ATINGIDAS PARA ESTE IP E E-MAIL. ENVIANDO ALERTA...");
-        await enviarAlertaLogin(email, ip, quantidade);
-
-        // Reseta o histórico desse IP + Email para evitar spam de e-mails
-        await pool.query(
-            `DELETE FROM tentativas_login 
-             WHERE email = $1 
-               AND ip = $2 
-               AND sucesso = false`,
-            [email, ip]
-        );
-    }
-}
-// Login correto
-await registrarTentativaLogin(email, true, ip);
-
-// Limpa histórico de falhas do usuário + IP para resetar a contagem
-await pool.query(
-    `DELETE FROM tentativas_login WHERE email = $1 AND ip = $2 AND sucesso = false`,
-    [email, ip]
-);
 app.post("/clientes", autenticar, apenasAdmin, async (req, res, next) => {
     try {
         const { error, value } = clienteSchema.validate(req.body);
