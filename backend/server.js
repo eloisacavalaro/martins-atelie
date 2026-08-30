@@ -460,11 +460,10 @@ async function registrarTentativaLogin(email, sucesso, ip) {
     );
 }
 async function enviarAlertaLogin(email, ip, quantidade) {
-
     console.log("ENTREI NA FUNÇÃO DE EMAIL");
 
     try {
-        const resultado = await resend.emails.send({
+        const { data, error } = await resend.emails.send({
             from: "onboarding@resend.dev",
             to: process.env.ALERTA_EMAIL,
             subject: "🚨 Tentativas suspeitas de login",
@@ -476,12 +475,17 @@ async function enviarAlertaLogin(email, ip, quantidade) {
             `
         });
 
-        console.log("RESEND RESULTADO:", resultado);
+        if (error) {
+            return console.error("ERRO RETORNADO PELO RESEND:", error);
+        }
+
+        console.log("E-MAIL ENVIADO COM SUCESSO. ID:", data.id);
 
     } catch (erro) {
-        console.error("ERRO RESEND:", erro);
+        console.error("ERRO INESPERADO (REDE/SISTEMA):", erro);
     }
 }
+
 app.post("/login", limiteLogin, async (req, res, next) => {
     try {
         const ip = req.ip;
