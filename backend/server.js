@@ -459,35 +459,23 @@ async function registrarTentativaLogin(email, sucesso, ip) {
     );
 }
 async function enviarAlertaLogin(email, ip, quantidade) {
-
     try {
-
-        await resend.emails.send({
+        const resultado = await resend.emails.send({
             from: "onboarding@resend.dev",
             to: process.env.ALERTA_EMAIL,
             subject: "🚨 Tentativas suspeitas de login",
             html: `
                 <h2>Tentativas suspeitas detectadas</h2>
-
-                <p>
-                    Foram detectadas
-                    <strong>${quantidade} tentativas de login inválidas</strong>
-                    em pouco tempo.
-                </p>
-
-                <p><strong>E-mail:</strong> ${email}</p>
-                <p><strong>IP:</strong> ${ip}</p>
-                <p><strong>Horário:</strong> ${new Date().toLocaleString("pt-BR")}</p>
+                <p>Foram detectadas <strong>${quantidade} tentativas</strong>.</p>
+                <p>E-mail: ${email}</p>
+                <p>IP: ${ip}</p>
             `
         });
 
+        console.log("RESEND RESULTADO:", resultado);
+
     } catch (erro) {
-
-        console.error(
-            "Não foi possível enviar alerta:",
-            erro
-        );
-
+        console.error("ERRO RESEND:", erro);
     }
 }
 app.post("/login", limiteLogin, async (req, res, next) => {
