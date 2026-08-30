@@ -449,17 +449,7 @@ app.delete("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
         next(erro);
     }
 });
-console.log("QUANTIDADE DE TENTATIVAS:", quantidade);
 
-if (quantidade == 5) {
-    console.log("5 TENTATIVAS ATINGIDAS - ENVIANDO EMAIL");
-
-    await enviarAlertaLogin(
-        email,
-        ip,
-        quantidade
-    );
-}
 
 async function registrarTentativaLogin(email, sucesso, ip) {
     await pool.query(
@@ -533,13 +523,17 @@ app.post("/login", limiteLogin, async (req, res, next) => {
                 tentativas.rows[0].quantidade
             );
 
-            if (quantidade === 5) {
-                await enviarAlertaLogin(
-                    email,
-                    ip,
-                    quantidade
-                );
-            }
+            console.log("QUANTIDADE DE TENTATIVAS:", quantidade);
+
+                if (quantidade === 5) {
+                    console.log("5 TENTATIVAS ATINGIDAS - ENVIANDO EMAIL");
+
+                    await enviarAlertaLogin(
+                        email,
+                        ip,
+                        quantidade
+                    );
+                }
 
             return res.status(401).json({
                 erro: "Email ou senha inválidos"
