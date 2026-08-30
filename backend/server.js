@@ -449,6 +449,17 @@ app.delete("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
         next(erro);
     }
 });
+console.log("QUANTIDADE DE TENTATIVAS:", quantidade);
+
+if (quantidade == 5) {
+    console.log("5 TENTATIVAS ATINGIDAS - ENVIANDO EMAIL");
+
+    await enviarAlertaLogin(
+        email,
+        ip,
+        quantidade
+    );
+}
 
 async function registrarTentativaLogin(email, sucesso, ip) {
     await pool.query(
@@ -459,6 +470,9 @@ async function registrarTentativaLogin(email, sucesso, ip) {
     );
 }
 async function enviarAlertaLogin(email, ip, quantidade) {
+
+    console.log("ENTREI NA FUNÇÃO DE EMAIL");
+
     try {
         const resultado = await resend.emails.send({
             from: "onboarding@resend.dev",
