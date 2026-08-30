@@ -451,19 +451,11 @@ app.delete("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
 });
 
 
-async function registrarTentativaLogin(email, sucesso, ip) {
-    await pool.query(
-        `INSERT INTO tentativas_login
-        (email, sucesso, ip)
-        VALUES ($1, $2, $3)`,
-        [email, sucesso, ip]
-    );
-}
 async function enviarAlertaLogin(email, ip, quantidade) {
-    console.log("ENTREI NA FUNÇÃO DE EMAIL");
+    console.log("--> Tentando enviar alerta via Resend...");
 
     try {
-        const { data, error } = await resend.emails.send({
+        const response = await resend.emails.send({
             from: "onboarding@resend.dev",
             to: process.env.ALERTA_EMAIL,
             subject: "🚨 Tentativas suspeitas de login",
@@ -475,14 +467,15 @@ async function enviarAlertaLogin(email, ip, quantidade) {
             `
         });
 
-        if (error) {
-            return console.error("ERRO RETORNADO PELO RESEND:", error);
+        if (response.error) {
+            console.error("ERRO DO RESEND:", response.error);
+            return;
         }
 
-        console.log("E-MAIL ENVIADO COM SUCESSO. ID:", data.id);
+        console.log("E-MAIL ENVIADO COM SUCESSO! ID:", response.data.id);
 
     } catch (erro) {
-        console.error("ERRO INESPERADO (REDE/SISTEMA):", erro);
+        console.error("ERRO GRAVE AO DISPARAR RESEND:", erro);
     }
 }
 
@@ -529,7 +522,7 @@ app.post("/login", limiteLogin, async (req, res, next) => {
 
             console.log("QUANTIDADE DE TENTATIVAS:", quantidade);
 
-                if (quantidade === 5) {
+                if (quantidade >= 5) {
                     console.log("5 TENTATIVAS ATINGIDAS - ENVIANDO EMAIL");
 
                     await enviarAlertaLogin(
