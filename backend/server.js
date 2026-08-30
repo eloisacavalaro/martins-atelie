@@ -484,6 +484,28 @@ async function enviarAlertaLogin(email, ip, quantidade) {
     }
 }
 
+// Helper interno para processar falhas de login
+async function processarFalhaLogin(email, ip) {
+    await registrarTentativaLogin(email, false, ip);
+
+    const tentativas = await pool.query(
+        `SELECT COUNT(*) AS quantidade
+         FROM tentativas_login
+         WHERE email = $1
+         AND sucesso = false
+         AND criado_em >= NOW() - INTERVAL '15 minutes'`,
+        [email]
+    );
+
+    const quantidade = Number(tentativas.rows[0].quantidade);
+    console.log("QUANTIDADE DE TENTATIVAS:", quantidade);
+
+    if (quantidade >= 5) {
+        console.log("5 OU MAIS TENTATIVAS ATINGIDAS - ENVIANDO EMAIL");
+        await enviarAlertaLogin(email, ip, quantidade);
+    }
+}
+
 app.post("/login", limiteLogin, async (req, res, next) => {
     try {
         const ip = req.ip;
@@ -505,91 +527,22 @@ app.post("/login", limiteLogin, async (req, res, next) => {
 
         // Email não encontrado
         if (resultado.rows.length === 0) {
-
-            await registrarTentativaLogin(
-                email,
-                false,
-                ip
-            );
-
-            const tentativas = await pool.query(
-                `SELECT COUNT(*) AS quantidade
-                 FROM tentativas_login
-                 WHERE email = $1
-                 AND sucesso = false
-                 AND criado_em >= NOW() - INTERVAL '15 minutes'`,
-                [email]
-            );
-
-            const quantidade = Number(
-                tentativas.rows[0].quantidade
-            );
-
-            console.log("QUANTIDADE DE TENTATIVAS:", quantidade);
-
-                if (quantidade >= 5) {
-                    console.log("5 TENTATIVAS ATINGIDAS - ENVIANDO EMAIL");
-
-                    await enviarAlertaLogin(
-                        email,
-                        ip,
-                        quantidade
-                    );
-                }
-
-            return res.status(401).json({
-                erro: "Email ou senha inválidos"
-            });
+            await processarFalhaLogin(email, ip);
+            return res.status(401).json({ erro: "Email ou senha inválidos" });
         }
 
         const usuario = resultado.rows[0];
 
-        const senhaCorreta = await bcrypt.compare(
-            senha,
-            usuario.senha
-        );
+        const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
         // Senha incorreta
         if (!senhaCorreta) {
-
-            await registrarTentativaLogin(
-                email,
-                false,
-                ip
-            );
-
-            const tentativas = await pool.query(
-                `SELECT COUNT(*) AS quantidade
-                 FROM tentativas_login
-                 WHERE email = $1
-                 AND sucesso = false
-                 AND criado_em >= NOW() - INTERVAL '15 minutes'`,
-                [email]
-            );
-
-            const quantidade = Number(
-                tentativas.rows[0].quantidade
-            );
-
-            if (quantidade === 5) {
-                await enviarAlertaLogin(
-                    email,
-                    ip,
-                    quantidade
-                );
-            }
-
-            return res.status(401).json({
-                erro: "Email ou senha inválidos"
-            });
+            await processarFalhaLogin(email, ip);
+            return res.status(401).json({ erro: "Email ou senha inválidos" });
         }
 
         // Login correto
-        await registrarTentativaLogin(
-            email,
-            true,
-            ip
-        );
+        await registrarTentativaLogin(email, true, ip);
 
         const token = jwt.sign(
             {
