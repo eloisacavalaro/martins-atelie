@@ -8,6 +8,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { Resend } = require("resend");
 
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
     throw new Error(
@@ -15,7 +16,10 @@ if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
     );
 }
 
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const app = express();
+app.set("trust proxy", 1);
 
 const corsOptions = {
     origin: "https://martins-atelie.onrender.com",
@@ -445,8 +449,51 @@ app.delete("/vestidos/:id",autenticar, apenasAdmin, async (req, res, next) => {
         next(erro);
     }
 });
+
+async function registrarTentativaLogin(email, sucesso, ip) {
+    await pool.query(
+        `INSERT INTO tentativas_login
+        (email, sucesso, ip)
+        VALUES ($1, $2, $3)`,
+        [email, sucesso, ip]
+    );
+}
+async function enviarAlertaLogin(email, ip, quantidade) {
+
+    try {
+
+        await resend.emails.send({
+            from: "onboarding@resend.dev",
+            to: process.env.ALERTA_EMAIL,
+            subject: "🚨 Tentativas suspeitas de login",
+            html: `
+                <h2>Tentativas suspeitas detectadas</h2>
+
+                <p>
+                    Foram detectadas
+                    <strong>${quantidade} tentativas de login inválidas</strong>
+                    em pouco tempo.
+                </p>
+
+                <p><strong>E-mail:</strong> ${email}</p>
+                <p><strong>IP:</strong> ${ip}</p>
+                <p><strong>Horário:</strong> ${new Date().toLocaleString("pt-BR")}</p>
+            `
+        });
+
+    } catch (erro) {
+
+        console.error(
+            "Não foi possível enviar alerta:",
+            erro
+        );
+
+    }
+}
 app.post("/login", limiteLogin, async (req, res, next) => {
     try {
+        const ip = req.ip;
+
         const { error, value } = loginSchema.validate(req.body);
 
         if (error) {
@@ -462,7 +509,36 @@ app.post("/login", limiteLogin, async (req, res, next) => {
             [email]
         );
 
+        // Email não encontrado
         if (resultado.rows.length === 0) {
+
+            await registrarTentativaLogin(
+                email,
+                false,
+                ip
+            );
+
+            const tentativas = await pool.query(
+                `SELECT COUNT(*) AS quantidade
+                 FROM tentativas_login
+                 WHERE email = $1
+                 AND sucesso = false
+                 AND criado_em >= NOW() - INTERVAL '15 minutes'`,
+                [email]
+            );
+
+            const quantidade = Number(
+                tentativas.rows[0].quantidade
+            );
+
+            if (quantidade === 5) {
+                await enviarAlertaLogin(
+                    email,
+                    ip,
+                    quantidade
+                );
+            }
+
             return res.status(401).json({
                 erro: "Email ou senha inválidos"
             });
@@ -475,11 +551,47 @@ app.post("/login", limiteLogin, async (req, res, next) => {
             usuario.senha
         );
 
+        // Senha incorreta
         if (!senhaCorreta) {
+
+            await registrarTentativaLogin(
+                email,
+                false,
+                ip
+            );
+
+            const tentativas = await pool.query(
+                `SELECT COUNT(*) AS quantidade
+                 FROM tentativas_login
+                 WHERE email = $1
+                 AND sucesso = false
+                 AND criado_em >= NOW() - INTERVAL '15 minutes'`,
+                [email]
+            );
+
+            const quantidade = Number(
+                tentativas.rows[0].quantidade
+            );
+
+            if (quantidade === 5) {
+                await enviarAlertaLogin(
+                    email,
+                    ip,
+                    quantidade
+                );
+            }
+
             return res.status(401).json({
                 erro: "Email ou senha inválidos"
             });
         }
+
+        // Login correto
+        await registrarTentativaLogin(
+            email,
+            true,
+            ip
+        );
 
         const token = jwt.sign(
             {
@@ -498,7 +610,7 @@ app.post("/login", limiteLogin, async (req, res, next) => {
         });
 
     } catch (erro) {
-        console.error("Erro ao processar login");
+        console.error("Erro ao processar login:", erro);
         next(erro);
     }
 });
